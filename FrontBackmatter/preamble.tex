@@ -1,0 +1,249 @@
+% some basic setting and imports
+\usepackage{etoolbox} % extended toolbox for macros
+\usepackage{xspace} % to get the spacing after macros right
+
+\usepackage{csquotes} % dealing with "quotes" easily/properly
+\MakeOuterQuote{"}
+
+\usepackage[iso,\languagename]{isodate} % e.g., 2023-02-28
+\usepackage{datetime2}
+\usepackage{iflang} % \IfLanguageName{ngerman}{Deutsche Version}{English Version}
+
+% get us an \IfFinal{in case final}{in case not final} command
+\makeatletter\@ifclasswith{scrreprt}{final}{
+    \newcommand{\IfFinal}[2]{#1}
+}{
+    \newcommand{\IfFinal}[2]{#2}
+}\makeatother
+
+% in case something uses these
+\title{\myTitle}
+\author{\myName}
+\date{\IfFinal{\myThesisSubDate}{\today}}
+
+
+
+% basic packages
+%\usepackage{geometry} % clashes with BCOR
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+% floats: tables, (sub)figures, and captions
+\usepackage{tabularx} % better tables
+  \setlength{\extrarowheight}{2pt} % increase table row height
+\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
+\usepackage{caption}
+\usepackage{makecell}
+\usepackage{multirow} % Required to enable merging of columns/rows in a table
+\usepackage{longtable}
+\captionsetup{font=small} % format=hang,
+\usepackage{subfig}
+%\usepackage{varwidth}  % like minipage but "up to width"
+%\usepackage{afterpage}
+%\usepackage[below]{placeins}
+\usepackage{rotating} % Required to display sideways tables/figures
+
+% math packages
+% \PassOptionsToPackage{fleqn}{amsmath}  % math environments and more by the AMS
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+%\usepackage{amsthm}
+%\usepackage{marginnote}
+%\usepackage{mathtools}
+%\usepackage{complexity}
+%\usepackage{siunitx}
+%\usepackage{bm} % Required for showing math symbols in boldface
+
+
+% math formulae:
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\lO}{\mathcal{O}}
+\DeclareMathOperator*{\avg}{avg}
+
+
+
+\usepackage{hyperref}
+\definecolor{webgreen}{rgb}{0,.5,0}  % as in classicthesis
+\definecolor{webbrown}{rgb}{.6,0,0}
+\hypersetup{
+  % draft, % hyperref's draft mode, for printing see below
+  % uncomment the following line if you want to have black links (e.g., for printing)
+  %colorlinks=false, linktocpage=false, pdfstartpage=1, pdfstartview=FitV, pdfborder={0 0 0},%
+  %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+  colorlinks=true, linktocpage=true, pdfstartpage=1, pdfstartview=FitV,%
+  urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
+  breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
+  plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+  hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
+  pdftitle={\myTitle},
+  pdfsubject={\mySubtitle},
+  pdfauthor={\myName},
+  pdfcreator={pdfLaTeX},
+  pdfkeywords={\myKeywords}
+}
+
+
+% good for \autoref{}
+\addto\extrasenglish{% only works with \usepackage[english]{babel}
+  \renewcommand*{\partautorefname}{Part}%
+  \renewcommand*{\chapterautorefname}{Chapter}%
+  \renewcommand*{\sectionautorefname}{Section}%
+  \renewcommand*{\subsectionautorefname}{Section}%
+  \renewcommand*{\subsubsectionautorefname}{Section}%
+  \renewcommand*{\paragraphautorefname}{Paragraph}%
+  \renewcommand*{\subparagraphautorefname}{Paragraph}%
+  \renewcommand*{\appendixautorefname}{Appendix}%
+  \renewcommand*{\pageautorefname}{Page}%
+  \renewcommand*{\figureautorefname}{Figure}%
+  \renewcommand*{\tableautorefname}{Table}%
+  \renewcommand*{\footnoteautorefname}{Footnote}%
+  \renewcommand*{\FancyVerbLineautorefname}{Line}%
+  \renewcommand*{\theoremautorefname}{Theorem}%
+  \renewcommand*{\equationautorefname}{Equation}%
+  \renewcommand*{\itemautorefname}{Item}%
+}%
+\addto\extrasngerman{%
+  \renewcommand*{\partautorefname}{Teil}%
+  \renewcommand*{\chapterautorefname}{Kapitel}%
+  \renewcommand*{\sectionautorefname}{Abschnitt}%
+  \renewcommand*{\subsectionautorefname}{Abschnitt}%
+  \renewcommand*{\subsubsectionautorefname}{Abschnitt}%
+  \renewcommand*{\paragraphautorefname}{Absatz}%
+  \renewcommand*{\subparagraphautorefname}{Absatz}%
+  \renewcommand*{\appendixautorefname}{Anhang}%
+  \renewcommand*{\pageautorefname}{Seite}%
+  \renewcommand*{\figureautorefname}{Abbildung}%
+  \renewcommand*{\tableautorefname}{Tabelle}%
+  \renewcommand*{\footnoteautorefname}{Fußnote}%
+  \renewcommand*{\FancyVerbLineautorefname}{Zeile}%
+  \renewcommand*{\theoremautorefname}{Theorem}%
+  \renewcommand*{\equationautorefname}{Gleichung}%
+  \renewcommand*{\itemautorefname}{Punkt}%
+}%
+\providecommand{\subfigureautorefname}{\figureautorefname}
+
+
+
+
+
+% ***************
+% biblatex setup
+% ***************
+\PassOptionsToPackage{%
+  backend=biber,%bibencoding=utf8, %instead of bibtex
+  safeinputenc=true,
+  %backend=bibtex8,bibencoding=ascii,%
+  language=auto,%
+  style=numeric-comp,%
+  %style=authoryear-comp, % Author 1999, 2010
+  %style=iso-authoryear,%
+  %bibstyle=authoryear,dashed=false, % dashed: substitute rep. author with ---
+  giveninits=true, % abbreviate firstnames
+  sorting=nyt, % name, year, title
+  maxbibnames=10, % default: 3, et al.
+  backref=true,%
+  %isbn=false,
+  natbib=true % natbib compatibility mode (\citep and \citet still work)
+}{biblatex}
+    \usepackage{biblatex}
+
+% enable linebreaks in bib urls
+\setcounter{biburlnumpenalty}{7000}
+\setcounter{biburlucpenalty}{7000}
+\setcounter{biburllcpenalty}{8000}
+
+% add actual bibtex file
+\addbibresource{literature.bib}
+
+% KOMA settings for bib
+\KOMAoptions{bibliography=totoc} % totocnumbered}
+\KOMAoptions{listof=totoc}
+
+
+
+% Setup for code listings
+% \usepackage{listings}
+% \usepackage{scrhack}  % useful workarounds for some package (e.g., listings) incompat with newer koma
+% %\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+% \lstset{%
+%     language=Python,%[LaTeX]Tex,%C++,
+%     morekeywords={PassOptionsToPackage,selectlanguage},
+%     keywordstyle=\color{RoyalBlue},%\bfseries,
+%     basicstyle=\small\ttfamily,
+%     %identifierstyle=\color{NavyBlue},
+%     commentstyle=\color{Green}\ttfamily,
+%     stringstyle=\rmfamily,
+%     numbers=none,%left,%
+%     numberstyle=\scriptsize,%\tiny
+%     stepnumber=5,
+%     numbersep=8pt,
+%     showstringspaces=false,
+%     breaklines=true,
+%     % frameround=ftff,
+%     frame=single,
+%     belowcaptionskip=.75\baselineskip
+%     %frame=L
+% }
+%\usepackage{minted}  % listings alternative
+%\usepackage{alltt}  % maybe also useful
+
+
+
+
+% Layout stuff
+% (recommendation: leave as is, unless forced by your supervisors)
+
+% line spacing
+% \usepackage[singlespacing]{setspace}
+
+%% Fontsizes
+% \RedeclareSectionCommand[
+%     afterskip=0pt,
+%     beforeskip=0pt
+% ]{chapter}
+% \setkomafont{chapter}{\large}
+% \RedeclareSectionCommand[
+%     afterskip=0pt,
+%     beforeskip=4pt,
+%     runin=false,
+% ]{section}
+% \setkomafont{section}{\normalsize}
+% \RedeclareSectionCommand[
+%     afterskip=0pt,
+%     beforeskip=3pt,
+%     runin=false
+% ]{subsection}
+% \setkomafont{subsection}{\normalsize}
+% \setkomafont{subsubsection}{\normalsize}
+% \setkomafont{caption}{\small}
+
+%% Paragraph
+% \KOMAoptions{parskip=half}
+
+
+% Header & Footer
+\usepackage[headsepline, automark]{scrlayer-scrpage} % plainheadsepline
+\pagestyle{scrheadings}
+% \clearpairofpagestyles
+\addtokomafont{pagehead}{\small\normalfont}
+% \ihead*{\myTitle}
+% \ofoot*{\pagemark}
+
+
+
+% other useful packages:
+% \usepackage{pgfgantt}
+
+% To-dos
+% \usepackage{snaptodo}
+% \usepackage[disable]{todonotes}  % disable % to just get rid of todonotes (for review)
+\usepackage[obeyFinal]{todonotes}  % doc final will also disable remaining todonotes
+%\usepackage{changebar}
+\usepackage{verbatim}
+\usepackage{lipsum}
+

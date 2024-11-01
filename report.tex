@@ -1,0 +1,165 @@
+\documentclass[%
+  a4paper,fontsize=11pt,abstract=on,%
+  twoside,BCOR=19mm,% for print version adapt...
+  %final % activate for final submission, removes draft status and date
+]{scrreprt}
+\defaulthyphenchar=127  % make all hyphens additional
+
+% encoding (keep this and use UTF-8)
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% select the thesis language
+% \usepackage[ngerman]{babel}  % select this for a German thesis
+\usepackage[english]{babel}  % select this for an English thesis
+
+
+% file with common and simple user defs
+\input{report-config.tex}
+
+% file taking care of imports, setup etc.
+\input{FrontBackmatter/preamble.tex}
+
+
+
+\begin{document}
+\pagenumbering{roman}
+\include{FrontBackmatter/title.tex}
+
+% feel free to out-source longer chapter / sections into own files
+% e.g., with as above with \include{Content/...}
+
+\begin{abstract}
+(What's this work about? Keep it short, max. 1/2 page.)
+
+Intro paragraph:
+One to three sentences setting the context of this work leading up to an open challenge.
+Explicitly name the challenge / gap.
+
+Main paragraph:
+A few sentences about your own idea / approach and how it addresses the open questions / might be able to close the gap.
+
+Conclusion paragraph:
+A few sentences about the performed experiments and whether they were successful.
+\end{abstract}
+
+\cleardoublepage
+\tableofcontents
+% if your professor wants them...
+% \listoffigures
+% \listoftables
+
+\cleardoublepage
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+
+
+\chapter{Introduction}\label{ch:intro}
+\section{Motivation}
+\lipsum[1-3]
+
+\section{Research Questions}\label{sec:researchQuestions}
+\lipsum[1-3]
+
+
+\section{Structure of this work}\label{sec:structure}
+The remainder of this work is structured as follows:
+
+After this introduction we will first focus on foundations in \autoref{ch:foundations}, by briefly recapturing necessary basics / state of the art (\autoref{sec:basics}) and common metrics (\autoref{sec:metrics}) used for evaluations in the community, before describing previous related works in \autoref{sec:relwork}.
+
+Afterwards, we will detail our approach in \autoref{ch:ownApproach} and its components as visualized in \autoref{fig:my_label}, consisting of ... (maybe a sentence each?)
+
+We evaluate our approach in \autoref{ch:eval}, by first describing our experimental setup... (maybe a sentence each?)
+
+We conclude this work with a summary, our main contributions and an outlook in \autoref{ch:conclusion}.
+
+\bigskip
+If easy to visualize, why not put an overview graphic here and reference it from text like this: \autoref{fig:my_label}?
+\begin{figure}
+    \centering
+    \includegraphics{FrontBackmatter/H-BRS_Logo_A4}
+    \caption[Short Caption shown in list of figures.]{Caption such as: An overview of the different work components being developed in this Thesis. Notice how components 1 and 2 build the foundation for 3 and 4, while 5 is independent of them.
+
+    If you can, include pictures as vectorized graphics / PDF. Keeps the file size low and they look much better.
+    
+    Never forget to cite a picture if it's copied / based on someone else's work, e.g., an explicit "(\IfLanguageName{ngerman}{Bildquelle / Bild in Anlehnung an}{Image source / Image adapted from}: \cite{DBLP:books/lib/Knuth97}.)" at the end of your caption.}
+    \label{fig:my_label}
+\end{figure}
+
+Also use \verb|\autoref{...}| instead of \verb|\ref{...}|, so you don't have to deal with prefixes and everything is consistent automagically.
+
+
+
+
+
+
+
+\chapter{Foundations}\label{ch:foundations}
+\lipsum[1]
+
+\section{Basics / State of the Art}\label{sec:basics}
+Pay attention to citing the right sources, e.g. Knuth's "TAoCP" \cite{DBLP:books/lib/Knuth97}.
+
+\lipsum[1-3]
+
+
+\section{Common Metrics}\label{sec:metrics}
+\lipsum[1-3]
+\section{Related Work}\label{sec:relwork}
+\lipsum[1-3]
+
+
+
+\chapter{Own Approach}\label{ch:ownApproach}
+\lipsum[1]
+\section{Idea / Overview}
+\lipsum[1-3]
+\section{Component 1}
+\lipsum[1-3]
+\section{Component 2}
+\lipsum[1-3]
+\section{Optionals}
+\lipsum[1-3]
+
+
+
+\chapter{Evaluation}\label{ch:eval}
+\lipsum[1]
+\section{Experimental Setup}
+\lipsum[1-3]
+\section{Results}
+\lipsum[1-3]
+\section{Discussion}
+\lipsum[1-3]
+
+
+
+\chapter{Conclusion}\label{ch:conclusion}
+\lipsum[1]
+\section{Summary and Contributions}
+\lipsum[1-3]
+\section{Outlook}
+\lipsum[1-3]
+
+
+
+% if appendix is more than just a few pages long, maybe put this
+% after bib and declaration... ask your supervisor
+% if there's none, comment out / remove
+\appendix
+\chapter{Appendix}
+\section{Further Details on Something}
+\lipsum
+
+
+
+\printbibliography
+
+\include{FrontBackmatter/declaration.tex}
+
+
+
+
+
+\end{document}

@@ -1,0 +1,63 @@
+\begin{titlepage}
+    \thispagestyle{empty}
+
+    % BG Logo (according to H-BRS corporate design guide)
+    \begin{tikzpicture}[remember picture, overlay]
+        \filldraw[color=black!5]($(current page.north west) + (0,-12)$) circle (\paperwidth * 5 / 14);
+        \filldraw[color=white]($(current page.north west) + (0,-12)$) circle (\paperwidth * 3 / 14);
+        \filldraw[color=black!5]($(current page.north east) + (0,-12)$) circle (\paperwidth * 5 / 14);
+    \end{tikzpicture}
+
+    \vspace{-2cm}
+    {
+    \includegraphics[width=9.2cm]{FrontBackmatter/H-BRS-Logo mit Fachbereich Informatik_DE_EN.pdf}
+    % \includegraphics{FrontBackmatter/H-BRS_Logo_A4.pdf}
+
+    % \vspace{1em}
+    % \noindent
+    % \hspace{3.614cm}
+    % \parbox{10cm}{
+    % \sffamily
+    % \large
+    % \textbf{Fachbereich Informatik}\\
+    % Department of Computer Science
+    % }
+    }
+
+    \vfill
+    \begin{center}
+
+        \Large\normalfont\myThesisType\\[1ex]
+        \large\normalfont\IfLanguageName{ngerman}{\myThesisStudyCourseGerman}{\myThesisStudyCourse}
+        
+        \vfill
+        
+        \Huge\normalfont\myTitle\\[1ex]
+        \ifdefempty{\mySubtitle}{}{\huge\normalfont\mySubtitle}
+
+        \vfill
+
+        \Large\myName
+        
+
+        \vfill
+        \vfill
+
+        \large
+        \begin{tabular}{ll}
+            \ifdefempty{\myThesisSupervisorExternal}{}{%
+                \IfLanguageName{ngerman}{Betreuer}{Supervisor}
+                    & \myThesisSupervisorExternal \\}
+            \ifdefempty{\myThesisExternalCompany}{}{%
+                    & \myThesisExternalCompany    \\[1ex]}
+            \IfLanguageName{ngerman}{Erstprüfer}{Examiner 1}
+                & \myProf    \\
+            \IfLanguageName{ngerman}{Zweitprüfer}{Examiner 2}
+                & \myOtherProf   \\[2em]
+            \IfFinal{}{\IfLanguageName{ngerman}{Vorabversion vom}{Draft as of} & \DTMnow\\
+            & \small \IfLanguageName{ngerman}{(Zur Abgabe: \texttt{final} Option in thesis.tex setzen!)}{(For submission: set \texttt{final} option in thesis.tex!)}\\}
+            \IfFinal{\IfLanguageName{ngerman}{Eingereicht am}{Submitted on} }{\IfLanguageName{ngerman}{Einzureichen am}{To be submitted on}}
+                & \myThesisSubDate
+        \end{tabular}
+    \end{center}
+\end{titlepage}
