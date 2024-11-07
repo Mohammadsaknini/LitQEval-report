@@ -30,17 +30,14 @@
 % e.g., with as above with \include{Content/...}
 
 \begin{abstract}
-(What's this work about? Keep it short, max. 1/2 page.)
+This work is based on a larger initiative known as the Search Query Writer (SQW), an internal tool developed at Fraunhofer INT to aid scientific researchers in creating comprehensive literature search queries. These queries are intended to provide researchers with a strong starting point in a topic area they may have limited knowledge about. 
 
-Intro paragraph:
-One to three sentences setting the context of this work leading up to an open challenge.
-Explicitly name the challenge / gap.
+The current state of the SQW tool presents a key challenge: the absence of a mechanism to evaluate the quality of the generated queries. As a result, the evaluation has so far been conducted subjectively. This project aims to address this issue by introducing a dataset that contains publications deemed relevant to specific topics. Additionally, it introduces several metrics to account for different aspects of query evaluation, given the complexity of the task.
 
-Main paragraph:
-A few sentences about your own idea / approach and how it addresses the open questions / might be able to close the gap.
+\textbf{(Explain performed experiments after completing them)}
 
-Conclusion paragraph:
-A few sentences about the performed experiments and whether they were successful.
+
+
 \end{abstract}
 
 \cleardoublepage
@@ -54,42 +51,7 @@ A few sentences about the performed experiments and whether they were successful
 \pagenumbering{arabic}
 
 
-
-\chapter{Introduction}\label{ch:intro}
-\section{Motivation}
-\lipsum[1-3]
-
-\section{Research Questions}\label{sec:researchQuestions}
-\lipsum[1-3]
-
-
-\section{Structure of this work}\label{sec:structure}
-The remainder of this work is structured as follows:
-
-After this introduction we will first focus on foundations in \autoref{ch:foundations}, by briefly recapturing necessary basics / state of the art (\autoref{sec:basics}) and common metrics (\autoref{sec:metrics}) used for evaluations in the community, before describing previous related works in \autoref{sec:relwork}.
-
-Afterwards, we will detail our approach in \autoref{ch:ownApproach} and its components as visualized in \autoref{fig:my_label}, consisting of ... (maybe a sentence each?)
-
-We evaluate our approach in \autoref{ch:eval}, by first describing our experimental setup... (maybe a sentence each?)
-
-We conclude this work with a summary, our main contributions and an outlook in \autoref{ch:conclusion}.
-
-\bigskip
-If easy to visualize, why not put an overview graphic here and reference it from text like this: \autoref{fig:my_label}?
-\begin{figure}
-    \centering
-    \includegraphics{FrontBackmatter/H-BRS_Logo_A4}
-    \caption[Short Caption shown in list of figures.]{Caption such as: An overview of the different work components being developed in this Thesis. Notice how components 1 and 2 build the foundation for 3 and 4, while 5 is independent of them.
-
-    If you can, include pictures as vectorized graphics / PDF. Keeps the file size low and they look much better.
-    
-    Never forget to cite a picture if it's copied / based on someone else's work, e.g., an explicit "(\IfLanguageName{ngerman}{Bildquelle / Bild in Anlehnung an}{Image source / Image adapted from}: \cite{DBLP:books/lib/Knuth97}.)" at the end of your caption.}
-    \label{fig:my_label}
-\end{figure}
-
-Also use \verb|\autoref{...}| instead of \verb|\ref{...}|, so you don't have to deal with prefixes and everything is consistent automagically.
-
-
+\input{content/introduction.tex}
 
 
 
