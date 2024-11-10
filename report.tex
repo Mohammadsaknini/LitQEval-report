@@ -32,11 +32,7 @@
 \begin{abstract}
 This work is based on a larger initiative known as the Search Query Writer (SQW), an internal tool developed at Fraunhofer INT to aid scientific researchers in creating comprehensive literature search queries. These queries are intended to provide researchers with a strong starting point in a topic area they may have limited knowledge about. 
 
-The current state of the SQW tool presents a key challenge: the absence of a mechanism to evaluate the quality of the generated queries. As a result, the evaluation has so far been conducted subjectively. This project aims to address this issue by introducing a dataset that contains publications deemed relevant to specific topics. Additionally, it introduces several metrics to account for different aspects of query evaluation, given the complexity of the task.
-
-\textbf{(Explain performed experiments after completing them)}
-
-
+The current state of the SQW tool presents a key challenge: the absence of a mechanism to evaluate the quality of the generated queries. As a result, the evaluation has so far been conducted subjectively. This project aims to address this issue by introducing a dataset that contains publications deemed relevant to specific topics. Additionally, it introduces several metrics to account for different aspects of query evaluation, given the complexity of the task.\textbf{(Explain performed experiments after completing them)}
 
 \end{abstract}
 
@@ -52,27 +48,8 @@ The current state of the SQW tool presents a key challenge: the absence of a mec
 
 
 \input{content/introduction.tex}
-
 \input{content/foundations.tex}
-
-
-
-
-
-
-
-
-\chapter{Own Approach}\label{ch:ownApproach}
-\lipsum[1]
-\section{Idea / Overview}
-\lipsum[1-3]
-\section{Component 1}
-\lipsum[1-3]
-\section{Component 2}
-\lipsum[1-3]
-\section{Optionals}
-\lipsum[1-3]
-
+\input{content/approach.tex}
 
 
 \chapter{Evaluation}\label{ch:eval}
@@ -100,6 +77,12 @@ The current state of the SQW tool presents a key challenge: the absence of a mec
 % if there's none, comment out / remove
 \appendix
 \chapter{Appendix}
+\begin{figure}
+	\centering	
+	\includegraphics{pics/year-distribution.pdf}
+	\caption[Distribution of publication years per topic]{The distribution of publication years for core publications across various research topics, highlighting the historical range of studies considered in the bibliometric analyses for each field. Notably, for \textit{Cervical Myelopathy}, the lower bound of publication years was set to 1980 for improved readability, although the actual range goes back to 1953.}
+	\label{fig:dataset-years}
+\end{figure}
 \section{Further Details on Something}
 \lipsum
 
