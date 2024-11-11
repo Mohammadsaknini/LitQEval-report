@@ -32,8 +32,8 @@ The objective of the Knowledge Enrichment step is to provide the LLM with contex
 
 \begin{figure}
 	\centering
-	\includegraphics{FrontBackmatter/H-BRS_Logo_A4}
-	\caption[Nice short caption]{Nice long caption}
+	\includegraphics[scale=0.3]{pics/sqw-overview.pdf}
+	\caption[Search Query Writer]{A simplified overview of the Search Query Writer. The process begins with the Knowledge Enrichment stage, where the model receives input data and sends it to an LLM agent equipped with a suite of tools to gain insights into the topic. Based on this understanding, the model generates a well-structured search query, formatted and executed across multiple dimensions to retrieve a relevant selection of literature. Within this literature set, RAG is applied to identify the most pertinent keywords, which are compiled into an optimized search query. This query can be iteratively refined to enhance overall search quality.}
 	\label{fig:sqw-overview}
 \end{figure}
 
@@ -44,12 +44,7 @@ The output of this first stage will be a list of keywords that are usually prese
 The iterative scientific fine-tuning on the other hand approaches more scientific sources, namely dimensions.ai, which is a literature database that offers quick access to publications across a wide range of journals. The query generated in the earlier stage is then used to prompt dimensions three times, once to retrieve the most cited 1k literature, a second time to retrieve the newest 1k literature, and one last 1k to retrieve the most relevant documents based on their altmetric rating. This leaves us with a total of 3k publications in which we extract the title and abstract for, and use an Openai's embedding model, and apply a simple RAG pipeline to retrieve the most relevant keywords based on the extracted passages.
 
 
-\begin{figure}
-	\centering
-	\includegraphics[scale=0.3]{pics/sqw-stage1.png}
-	\caption[Nice short caption]{Nice long caption}
-	\label{fig:sqw-stage1}
-\end{figure}
+
 
 \section{Related Work}\label{sec:relwork}
 
@@ -57,5 +52,5 @@ Systematic literature reviews are widely used across various fields, allowing re
 
 Large Language Models (LLMs) have had a significant impact on modern technology, including in scientific research, where they have provided remarkable improvements in speed. While the processing speed of LLMs is unprecedented, the quality of their output in various domains is still being explored. The work by Wang \autocite{wang2023can} investigated the performance of ChatGPT in generating Boolean search queries for literature reviews. Specifically, it evaluated the effectiveness of ChatGPT in constructing queries for systematic literature reviews using different prompting techniques, including zero-shot, few-shot and iterative guided approaches. The evaluation used the CLEF datasets \autocite{kanoulas2017clef, kanoulas2018clef, kanoulas2019clef} and an additional medical dataset containing a collection of seeds \autocite{Wang_2022}. Although the results highlight the limitations of ChatGPT's performance, this work underscores the potential of LLMs to aid literature review, especially when supported by examples or more advanced, structured pipelines.
 
-A broader and more diverse evaluation of the quality of automatically generated literature search queries for systematic literature reviews was conducted by Badami \autocite{badami2023adaptive}. In this work, they introduced a pipeline that generates literature search queries based on a given research question and abstracts from previously identified relevant publications. The evaluation was performed against a dataset they constructed, which contains the results of 10 systematic literature reviews, including candidate papers, queries used, and relevant papers identified in each review. For example, in the review $SLR_1$, a total of 7,002 candidate papers were retrieved using search query $S$, from which a subset of 59 relevant papers $RP$ was identified. To assess their proposed approach, they compared the generated queries in various settings using recall and precision metrics, benchmarking them against the original search query $S$. The dataset is made public ally available on Zenodo\footnote{\url{https://tinyurl.com/496zuar3}}.
+A broader and more diverse evaluation of the quality of automatically generated literature search queries for systematic literature reviews was conducted by Badami \autocite{badami2023adaptive}. In this work, they introduced a pipeline that generates literature search queries based on a given research question and abstracts from previously identified relevant publications. The evaluation was performed against a dataset they constructed, which contains the results of 10 systematic literature reviews, including candidate papers, queries used, and relevant papers identified in each review. For example, in the review $SLR_1$, a total of 7,002 candidate papers were retrieved using search query $S$, from which a subset of 59 relevant papers $RP$ was identified. To assess their proposed approach, they compared the generated queries in various settings using recall and precision metrics, benchmarking them against the original search query $S$. The dataset is publicly available on Zenodo\footnote{\url{https://tinyurl.com/496zuar3}}.
 
