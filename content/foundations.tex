@@ -41,12 +41,12 @@ Notably, each of the steps is conducted within a separate memory session, with r
 
 The output of this first stage will be a list of keywords that are usually presented in a transfer-list as shown in \autoref{fig:sqw-stage1}, that contains two lists; specific and general keywords, along side some additional information such as the number of publications found per keyword. The goal is to let the user decide weather a keyword is too broad in which he is supposed to move it to the general list, and if it targets the specified topic quite well then it should stay in the specific list, and at the end they user should also provide an overarching topic for which the scope of the general keywords is limited to be more focused to words the research intent. The output of this step will be the queries that will be used for the evaluation at the end.
 
-The iterative scientific fine-tuning on the other hand approaches more scientific sources, namely dimensions.ai, which is a literature database that offers quick access to publications across a wide range of journals. The query generated in the earlier stage is then used to prompt dimensions three times, once to retrieve the most cited 1k literature, a second time to retrieve the newest 1k literature, and one last 1k to retrieve the most relevant documents based on their \textbf{DOUBLE CHECK THIS INFO} internal rating metric. This leaves us with a total of 3k publications in which we extract the title and abstract for, and use an Openai's embedding model, and apply a simple RAG pipeline to retrieve the most relevant keywords based on the extracted passages.
+The iterative scientific fine-tuning on the other hand approaches more scientific sources, namely dimensions.ai, which is a literature database that offers quick access to publications across a wide range of journals. The query generated in the earlier stage is then used to prompt dimensions three times, once to retrieve the most cited 1k literature, a second time to retrieve the newest 1k literature, and one last 1k to retrieve the most relevant documents based on their altmetric rating. This leaves us with a total of 3k publications in which we extract the title and abstract for, and use an Openai's embedding model, and apply a simple RAG pipeline to retrieve the most relevant keywords based on the extracted passages.
 
 
 \begin{figure}
 	\centering
-	\includegraphics{FrontBackmatter/H-BRS_Logo_A4}
+	\includegraphics[scale=0.3]{pics/sqw-stage1.png}
 	\caption[Nice short caption]{Nice long caption}
 	\label{fig:sqw-stage1}
 \end{figure}
