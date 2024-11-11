@@ -28,20 +28,13 @@ This process was repeated across all selected research fields, resulting in a da
 \subsection{Dataset Analysis}
 We recognize that potential biases may exist in our dataset due to its complete reliance on the bibliometric community for identifying core publications. This often implies that publications with higher citation counts are deemed more relevant. To assess this, we analyzed the citation distribution per topic, as provided by Dimensions, shown in \autoref{fig:dataset-citation}. Additionally, we examined the distribution of publication years per topic, illustrating the time span considered in the bibliometric analyses, as shown in \autoref{fig:dataset-years}.  If we compare the distribution of publication years for the medical research field \textit{Cervical Myelopathy} with that of \textit{IoT in Healthcare}, both of which were published in 2018, we can observe distinct differences in the year distributions of their core publications. These variations may be attributed to factors such as the recency of the field, changes in terminology over time, or the nature of the research area, where one field may prioritize more established works while the other focuses on recent advancements.
 
-\begin{figure}
-	\centering	
-	\includegraphics{pics/citation-distribution.pdf}
-	\caption[Field citation ratio per topic]{The citation ratio per topic, showing the relative citation counts of core publications compared to the average citation frequency within their respective research fields. This illustrates how the prominence of each publication compares to typical citation levels in its field.}
-	\label{fig:dataset-citation}
-\end{figure}
-
 For the evaluation pipeline that we will introduce, the embeddings of the core documents are essential for effectively assessing the search query, as detailed in \autoref{sec:eval-metrics}. To validate this approach, we examine the clustered embeddings of the titles and abstracts for each core topic, as well as the bibliometric analyses in which these documents were initially referenced. This enables us to assess whether core publications within each field exhibit semantic similarity while also demonstrating some degree of dissimilarity from publications in other topics. The resulting clusters, shown in \autoref{fig:dataset-clustering}, were generated using k-means clustering, where $k$ is set to the number of topics. For this, we use OpenAI's small embeddings model alongside t-SNE\autocite{van2008visualizing} to reduce the dimensionality of the non-linear embedding vectors to two dimensions.
 
 
-\begin{figure}
+\begin{figure}[!hb]
 	\centering	
-	\includegraphics[scale=0.7]{pics/tnse_clustering.pdf}
-	\caption[-]{-}
+	\includegraphics[scale=0.4]{pics/tnse_clustering.pdf}
+		\caption[Core Publications Clustering]{This illustration shows a clustering of publication embeddings generated using the titles and abstracts of each corresponding publication. These were embedded using OpenAI's small embedding model, with t-SNE applied to reduce the high dimensionality of the embeddings. The results were then clustered using k-means, where $k$ is set to 15 (representing the number of topics). The clustering effectively groups core publications within each field based on semantic similarity. Exceptions include \textit{IoT in Healthcare} and \textit{AI on Edge Devices}, as well as \textit{Tourism Growth Nexus} and \textit{Energy Growth Nexus}, which overlap due to the inherent similarity in the respective literature.}
 	\label{fig:dataset-clustering}
 \end{figure}
 

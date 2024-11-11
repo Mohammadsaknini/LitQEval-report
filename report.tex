@@ -1,6 +1,6 @@
 \documentclass[%
   a4paper,fontsize=11pt,abstract=on,%
-  twoside,BCOR=19mm,% for print version adapt...
+  oneside,BCOR=19mm,% for print version adapt...
   %final % activate for final submission, removes draft status and date
 ]{scrreprt}
 \defaulthyphenchar=127  % make all hyphens additional
@@ -26,9 +26,6 @@
 \pagenumbering{roman}
 \include{FrontBackmatter/title.tex}
 
-% feel free to out-source longer chapter / sections into own files
-% e.g., with as above with \include{Content/...}
-
 \begin{abstract}
 This work is based on a larger initiative known as the Search Query Writer (SQW), an internal tool developed at Fraunhofer INT to aid scientific researchers in creating comprehensive literature search queries. These queries are intended to provide researchers with a strong starting point in a topic area they may have limited knowledge about. 
 
@@ -39,7 +36,7 @@ The current state of the SQW tool presents a key challenge: the absence of a mec
 \cleardoublepage
 \tableofcontents
 % if your professor wants them...
-% \listoffigures
+ \listoffigures
 % \listoftables
 
 \cleardoublepage
@@ -47,34 +44,14 @@ The current state of the SQW tool presents a key challenge: the absence of a mec
 \pagenumbering{arabic}
 
 
-\input{content/introduction.tex}
-\input{content/foundations.tex}
-\input{content/approach.tex}
-
-
-\chapter{Evaluation}\label{ch:eval}
-\lipsum[1]
-\section{Experimental Setup}
-\lipsum[1-3]
-\section{Results}
-\lipsum[1-3]
-\section{Discussion}
-\lipsum[1-3]
+\include{content/introduction.tex}
+\include{content/foundations.tex}
+\include{content/approach.tex}
+\include{content/evaluation.tex}
+\include{content/conclusion.tex}
 
 
 
-\chapter{Conclusion}\label{ch:conclusion}
-\lipsum[1]
-\section{Summary and Contributions}
-\lipsum[1-3]
-\section{Outlook}
-\lipsum[1-3]
-
-
-
-% if appendix is more than just a few pages long, maybe put this
-% after bib and declaration... ask your supervisor
-% if there's none, comment out / remove
 \appendix
 
 \chapter{Appendix}
@@ -85,6 +62,13 @@ The current state of the SQW tool presents a key challenge: the absence of a mec
 	\caption[SQW Knowledge Enrichment]{A screenshot of the SQW UI after completing the Knowledge Enrichment stage. On the left, a list of keywords is displayed alongside the number of publications associated with each keyword when used as a search term. The keywords on the right-hand side were manually categorized as general and can be roughly assessed by the number of associated publications. To narrow the scope of general keywords, we selected "agriculture" as the overarching topic. The final generated query is displayed and updated interactively as values in the transfer lists are adjusted.}
 
 	\label{fig:sqw-stage1}
+\end{figure}
+
+\begin{figure}
+	\centering	
+	\includegraphics{pics/citation-distribution.pdf}
+	\caption[Field citation ratio per topic]{The citation ratio per topic, showing the relative citation counts of core publications compared to the average citation frequency within their respective research fields. This illustrates how the prominence of each publication compares to typical citation levels in its field.}
+	\label{fig:dataset-citation}
 \end{figure}
 
 \begin{figure}
