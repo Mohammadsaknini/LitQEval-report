@@ -92,5 +92,13 @@ Semantic Precision (SP) for this approach is then:
 \begin{equation}\label{eq:sp-mvee}
 	\text{SP}_{\text{MVEE}} = \frac{\sum_{\vec{p} \in \text{pubs}} \mathbb{I} \left( (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1 \right)}{|\text{pubs}|}
 \end{equation}
-% formula
+
+Now that we have a metric that can be used punish the model in case of generating a too broad of a query, we use can use it as a factor to calculate the F-Score, the goal of the standard F-score is to balance out between the recall and precision, but in our case we use $F-\beta$ instead, whereby the $\beta$ is the weighting factor of the recall, meaning the higher it is the more important the recall will be, in our case we set it to be 2, meaning that the recall is twice as important as the precision.
+\begin{equation}\label{eq:f-beta}
+F_\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{(\beta^2 \cdot \text{Precision}) + \text{Recall}}
+\end{equation}
+For our specific case where $\beta = 2$, emphasizing the importance of recall, it is:
+\[
+	F_2 = 5 \cdot \frac{\text{Precision} \cdot \text{Recall}}{(4 \cdot \text{Precision}) + \text{Recall}}
+\]
 
