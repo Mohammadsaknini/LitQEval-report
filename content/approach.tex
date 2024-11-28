@@ -114,20 +114,20 @@ For instance, if a query retrieves 50,000 publications, with 30,000 deemed relev
 \begin{itemize}
 	\item \( p \): Controls the initial slowness of the decay.
 	\item \( q \): Controls the acceleration of the decay near the end.
-	\item $\beta$: The maximum threshold for the decay, representing the point at which the decay becomes negligible.
+	\item $\alpha$: The maximum threshold for the decay, representing the point at which the decay becomes negligible.
 \end{itemize}
 
 The decay function is expressed as:
 
 \[
-\lambda = \left(1 - \left(\frac{n_{\text{pubs}}}{\beta}\right)^p\right)^q
+\lambda = \left(1 - \left(\frac{n_{\text{pubs}}}{\alpha}\right)^p\right)^q
 \]
 
 
 \begin{figure}[h!]
 	\centering	
 	\includegraphics[scale=0.7]{pics/decay_function.pdf}
-	\caption[Decay function for semantic precision]{This illustration demonstrates the effect of the decay factor, which ensures that the contribution of a large number of publications diminishes as the total count approaches the threshold. This prevents an overwhelming volume from biasing the semantic precision. For this example, we set the threshold (\( \beta \)) to 50k, \( p=2 \), and \( q=3 \).}	
+	\caption[Decay function for semantic precision]{This illustration demonstrates the effect of the decay factor, which ensures that the contribution of a large number of publications diminishes as the total count approaches the threshold. This prevents an overwhelming volume from biasing the semantic precision. For this example, we set the threshold (\( \alpha \)) to 50k, \( p=1.5 \), and \( q=10 \).}	
 	\label{fig:decay-function}
 \end{figure}
 
@@ -192,3 +192,12 @@ To cluster the embeddings, we use K-means for $2 \leq K \leq 100$, iteratively d
 The clustering results \autoref{fig:sr-clustering-baseline} indicate that the space can be divided into 5 groups. The best group has a size of 4,954 out of 17,573 publications and contains 15 out of the 20 core publications. We experimented with adjusting the threshold to match the quality of cosine similarity by increasing it to the next best solutions. At a threshold of approximately 0.75, the results included 6,861 publications with 17 core publications. At a threshold of approximately 0.85, all 17,573 publications were clustered together.
 
 Additionally, we clustered the UMAP embeddings, $E_{UMAP}$, using the same thresholds (0.7, 0.75, and 0.85). These thresholds consistently yielded similar results, with 11,644 out of 17,573 publications identified as relevant and 19 out of the 20 core publications included. This consistency can serve as an indicator of the information loss incurred when using UMAP.
+
+As mentioned in \autoref{sec:eval-metrics}, the $F_{\beta}$ score is the metric we will use for evaluation, with $\beta=2$, emphasizing recall by making it twice as important as precision. However, we extend the traditional $F_{\beta}$ score by incorporating components such as semantic precision in place of typical precision and introducing a decay factor to account for the number of semantically relevant retrieved publications. To better understand the influence of each component, we visualize their effects in \autoref{fig:f-score}.
+
+\begin{figure}[!hb]
+	\centering	
+	\includegraphics[scale=0.7]{pics/f_score.pdf}
+	\caption[$F_{\beta}$ components analysis]{This illustration demonstrates the effect of each component in the $F_{\beta}$ score evaluation metric, where $\beta=2$ and the decay hyperparameters are set to $p=1.5$, $q=10$, and $\alpha=50000$. In the top left, we observe the impact of $\beta=2$, which ensures better scaling even with lower precision if the recall is 1. The top right plot shows how the score scales almost linearly with the precision. The bottom left and right plots depict the dampening effect on the $F_{\beta}$ score as the number of relevant publications increases, emphasizing the importance of controlling the decay to prevent inflated scores from overly large results.}\label{fig:f-score}
+\end{figure}
+
