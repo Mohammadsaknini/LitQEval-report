@@ -177,7 +177,8 @@ We experiment with two enclosing shapes: the MVEE and a Convex Hull. The primary
 	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the Minimum Volume Enclosing Ellipsoid (MVEE). An advantage of this approach is that we always expect that all teh core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
 \end{figure}
 
-In the final evaluation, we chose to omit this form of semantic precision due to the reliance on $E_{umap}$, which does not capture the same level of semantic meaning as the higher-dimensional embeddings, $E_o$. Calculating the exact loss of semantic information for UMAP is not straightforward, unlike PCA, which is a linear transformation. However, by employing a Partial Least Squares Regression approach, as described by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}, we estimated the explained variance of the two dimensions to be only 7.15\%.
+For further evaluation, understanding the quality of the UMAP embeddings ($E_{UMAP}$) is crucial, as they do not retain the same level of semantic meaning as the original higher-dimensional embeddings ($E_o$). Unlike PCA, which is a linear transformation, calculating the exact semantic loss for UMAP embeddings is challenging due to its nonlinear nature. To approximate this loss, we utilized a Partial Least Squares Regression approach as outlined by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}. Based on this method, we estimated that the explained variance of the two-dimensional UMAP embeddings is only 7.15\%. This low explained variance underscores the significant reduction in information captured when transitioning from high-dimensional to two-dimensional space.
+
 
 \subsubsection{Semantic Clustering Precision}
 

@@ -11,6 +11,64 @@ The predicted query, however, is semi-automatically generated using the SQW tool
 
 The second experiment focuses exclusively on the 7 SLR topics. It uses the exact queries and results from the first experiment but compares them to the SLR queries manually crafted by experts in the field. These expert queries are designed with well-defined research questions aimed at retrieving the most relevant publications that help tackle these exact questions.
 
-
 \section{Results}
+Using the data from the first experiment, we computed all the metrics, namely: Cosine Precision, Clustering Precision, MVEE Precision, Hull Precision, Recall, and the F2 score for each precision metric, as shown in Figure \ref{fig:all-metrics-1}. When examining the precision metrics, the clustering precision distinctly stands out due to its high value in certain cases, which can be directly attributed to low recall. This recall issue is also evident in some instances for the MVEE and Hull metrics, such as the baseline for \textit{Drones in Agriculture}, where they are set to 0 because fewer than three retrieved core publications are available, which is the minimum number required to define a plane. Conversely, cosine similarity only requires a single point to function.
+
+A strong correlation is observed between cosine precision and the MVEE and Hull methods, despite relying solely on UMAP embeddings to define the enclosing shapes. This highlights the robustness of these approaches in identifying semantically relevant publications.
+
+Considering the F2 score, a notable example of the impact of overly large queries without any recall improvement is \textit{Robotic Arthroplasty}. Both the baseline and predicted queries achieved a recall of 0.957, but the expanded predicted query from the SQW retrieved significantly more results overall. Specifically, the predicted query retrieved 22,892 publications, of which only 2,834 were relevant based on cosine similarity. In contrast, the baseline query retrieved 2,151 documents, with 1,904 classified as relevant. This demonstrates how an excessively large query can dilute the precision without improving recall or the number of relevant documents retrieved.
+
+In \autoref{table:expirment-1}, we can better interpret the results of the first experiment by examining the differences between the scores of the predicted query and the baseline. Here, positive values indicate that the predicted query performs better, while negative values show that the baseline outperforms the predicted query. 
+
+As expected, the predicted query consistently achieves similar or better recall across all topics due to the inherent nature of the SQW. However, when evaluating precision, it is evident that the broader queries generated through query expansion often degrade the performance of the model. This effect is particularly visible in the F2 scores, where the increased number of irrelevant publications impacts the balance between recall and precision.
+
+While the SQW demonstrates advantages in terms of recall, its over-expansion often leads to excessive noise in the results. This trade-off is especially clear for topics with a significant drop in precision or F2 scores due to the broader query scope.
+
+\begin{table}
+	\caption{In this table we can see the difference in values between the predicted query from the SQW and the baseline, whereby a negative value means that the baseline is better. As anticipated we at least always achieve a similar recall, but in most cases, the SQW yields better recall. However, it severely suffers in precision. When looking at the F2 value, we can see that the tool only notably outperforms the baseline on the three topics \textit{Drones in Agriculture}, \textit{Sustainable Bio Fuel Economy}, and \textit{Multicore Performance Prediction}, whereas it shows a clear disadvantage on the topics \textit{Perovskite Solar Cells Stability}, \textit{Robotic Arthroplasty}, and \textit{Cervical Myelopathy}.}
+	\tiny
+	\centering
+	\hspace*{-1cm}
+	\begin{tabular}{p{3cm}c|cccc|cccc}
+		& & \multicolumn{4}{c|}{\textbf{Precision}} & \multicolumn{4}{c}{\textbf{F2}} \\ \cline{1-10}
+		\multicolumn{1}{c}{\centering \textbf{Topic}} &
+		\multicolumn{1}{p{1cm}|}{\centering \textbf{Recall}} &
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Cosine}} &
+		\multicolumn{1}{p{1.2cm}}{\centering \textbf{Clustering}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{MVEE}} & 
+		\multicolumn{1}{p{0.8cm}|}{\centering \textbf{Hull}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Cosine}} & 
+		\multicolumn{1}{p{1.2cm}}{\centering \textbf{Clustering}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{MVEE}}  & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Hull}}  \\ \hline 
+		\centering{Robotic Arthroplasty} & 0.000 &  -0.761 &  -0.528 &  -0.707 &  -0.679 &  -0.560 &  -0.490 &  -0.570 &  -0.570 \\
+		\centering{Soft Robotics} & \textbf{0.111} &  -0.134 &  -0.147 &  -0.292 &  -0.152 &  -0.130 &  -0.090 &  -0.400 &  -0.300 \\
+		\centering{Crop Yield Prediction} & \textbf{0.109} &  -0.280 &  -0.118 &  -0.261 &  -0.234 &  -0.210 &  -0.230 &  -0.740 &  -0.530 \\
+		\centering{Synthetic Biology} & \textbf{0.310} &  -0.050 &  -0.185 & \textbf{0.637} & \textbf{0.510} & \textbf{0.030} & \textbf{0.080} &  -0.420 &  -0.330 \\
+		\centering{Resilience in Business and management} & \textbf{0.185} &  -0.022 &  -0.838 & \textbf{0.150} & \textbf{0.071} & \textbf{0.060} & \textbf{0.170} & \textbf{0.330} & \textbf{0.240} \\
+		\centering{Cervical Myelopathy} & \textbf{0.085} &  -0.298 &  -0.299 &  -0.061 &  -0.017 &  -0.330 &  -0.250 &  -0.700 &  -0.590 \\
+		\centering{Drones in Agriculture} & \textbf{0.480} &  -0.184 & \textbf{0.298} & \textbf{0.069} & \textbf{0.028} & \textbf{0.220} & \textbf{0.160} & \textbf{0.240} & \textbf{0.120} \\
+		\centering{Tourism Growth Nexus} & 0.000 &  -0.562 & \textbf{0.310} & 0.000 & 0.000 &  -0.070 &  -0.040 & 0.000 & 0.000 \\
+		\centering{Sustainable Biofuel Economy} & \textbf{0.260} &  -0.122 & \textbf{0.733} & \textbf{0.513} & \textbf{0.343} & \textbf{0.190} & 0.000 & \textbf{0.150} & \textbf{0.320} \\
+		\centering{Perovskite Solar Cells Stability} & \textbf{0.103} &  -0.237 &  -0.213 & \textbf{0.051} & \textbf{0.082} &  -0.460 &  -0.430 &  -0.470 &  -0.540 \\
+		\centering{Nanopharmaceuticals OR Nanonutraceuticals} & \textbf{0.040} & \textbf{0.003} &  -0.376 & 0.000 & 0.000 & \textbf{0.040} & \textbf{0.010} & 0.000 & 0.000 \\
+		\centering{Green Warehousing} & \textbf{0.052} &  -0.227 &  -0.411 & \textbf{0.023} & \textbf{0.004} &  -0.130 &  -0.030 &  -0.530 &  -0.200 \\
+		\centering{AI on Edge Devices} & \textbf{0.250} &  -0.227 & \textbf{0.050} & \textbf{0.182} & \textbf{0.138} & \textbf{0.090} &  -0.090 &  -0.050 & \textbf{0.200} \\
+		\centering{Internet of Things in Healthcare} & \textbf{0.172} &  -0.203 &  -0.090 &  -0.146 &  -0.109 &  -0.050 &  -0.160 &  -0.500 &  -0.400 \\
+		\centering{Software Process Line} & \textbf{0.024} &  -0.001 & \textbf{0.239} &  -0.048 &  -0.037 & 0.000 &  -0.020 &  -0.660 &  -0.300 \\
+		\centering{Data Stream Processing Latency} & \textbf{0.087} &  -0.292 &  -0.480 &  -0.237 &  -0.196 &  -0.130 &  -0.150 &  -0.510 &  -0.480 \\
+		\centering{Business Process Meta Models} & \textbf{0.307} &  -0.199 &  -0.233 &  -0.228 &  -0.148 &  -0.090 &  -0.050 &  -0.360 &  -0.300 \\
+		\centering{Multicore Performance Prediction} & \textbf{0.273} &  -0.239 & 0.000 & \textbf{0.158} & \textbf{0.100} & \textbf{0.200} & \textbf{0.010} & \textbf{0.400} & \textbf{0.320} \\
+		\centering{Cloud Migration} & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+		\centering{Software Fault Prediction Metrics} & \textbf{0.312} &  -0.604 & \textbf{0.671} & \textbf{0.006} & \textbf{0.012} &  -0.050 & \textbf{0.020} &  -0.090 &  -0.010 \\
+		\centering{Software Defect Prediction} & \textbf{0.186} &  -0.466 &  -0.311 &  -0.121 &  -0.233 &  -0.040 & \textbf{0.030} &  -0.390 &  -0.300 \\
+	\end{tabular}\label{table:expirment-1}
+\end{table}
+
+
+\begin{figure}
+	\centering	
+	\includegraphics[scale=0.7]{pics/all-metrics-1.pdf}
+	\caption[Evaluation: Experiment 1]{This figure shows the results of the first experiment across all the datasets. Initially, the issue with the clustering precision metric becomes apparent in cases such as \textit{Cloud Migration} and \textit{Multicore Performance Prediction}, where the value reaches 1, indicating that all retrieved documents are deemed relevant. This occurs due to low recall and the predefined threshold. However, when examining the other precision metrics, some correlation between them is observed. The impact of the crafted F2 score is particularly evident in cases like \textit{Robotic Arthroplasty}, where the baseline score is very high. Conversely, for the predicted query—which retrieves more publications but maintains the same recall—the score is significantly lower.}\label{fig:all-metrics-1}
+\end{figure}
 \section{Discussion}
