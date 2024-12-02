@@ -14,7 +14,8 @@ The second experiment focuses exclusively on the 7 SLR topics. It uses the exact
 \section{Results}
 Using the data from the first experiment, we computed all the metrics, namely: Cosine Precision, Clustering Precision, MVEE Precision, Hull Precision, Recall, and the F2 score for each precision metric, as shown in Figure \ref{fig:all-metrics-1}. When examining the precision metrics, the clustering precision distinctly stands out due to its high value in certain cases, which can be directly attributed to low recall. This recall issue is also evident in some instances for the MVEE and Hull metrics, such as the baseline for \textit{Drones in Agriculture}, where they are set to 0 because fewer than three retrieved core publications are available, which is the minimum number required to define a plane. Conversely, cosine similarity only requires a single point to function.
 
-A strong correlation is observed between cosine precision and the MVEE and Hull methods, despite relying solely on UMAP embeddings to define the enclosing shapes. This highlights the robustness of these approaches in identifying semantically relevant publications.
+A strong correlation is observed between cosine precision and the MVEE and Hull methods, despite relying solely on UMAP embeddings to define the enclosing shapes. This highlights the robustness of these approaches in identifying semantically relevant publications. Additionally, we have two special case topics that had 0 recall, namely \textit{Cloud Migration} and \textit{Multicore Performance Prediction}. As expected, these resulted in a 0 across the board except for the cosine similarity, since it does not require any of the retrieved core publications to exist in order to compute. Instead, it only relies on the pre-computed average embeddings of the core publications. Interestingly, the results for \textit{Cloud Migration} were not considered relevant at all, which we further experimented with and found that the first relevant publication is identified at a threshold of 0.66.
+
 
 Considering the F2 score, a notable example of the impact of overly large queries without any recall improvement is \textit{Robotic Arthroplasty}. Both the baseline and predicted queries achieved a recall of 0.957, but the expanded predicted query from the SQW retrieved significantly more results overall. Specifically, the predicted query retrieved 22,892 publications, of which only 2,834 were relevant based on cosine similarity. In contrast, the baseline query retrieved 2,151 documents, with 1,904 classified as relevant. This demonstrates how an excessively large query can dilute the precision without improving recall or the number of relevant documents retrieved.
 
@@ -23,6 +24,7 @@ In \autoref{table:expirment-1}, we can better interpret the results of the first
 As expected, the predicted query consistently achieves similar or better recall across all topics due to the inherent nature of the SQW. However, when evaluating precision, it is evident that the broader queries generated through query expansion often degrade the performance of the model. This effect is particularly visible in the F2 scores, where the increased number of irrelevant publications impacts the balance between recall and precision.
 
 While the SQW demonstrates advantages in terms of recall, its over-expansion often leads to excessive noise in the results. This trade-off is especially clear for topics with a significant drop in precision or F2 scores due to the broader query scope.
+
 
 \begin{table}
 	\caption{In this table we can see the difference in values between the predicted query from the SQW and the baseline, whereby a negative value means that the baseline is better. As anticipated we at least always achieve a similar recall, but in most cases, the SQW yields better recall. However, it severely suffers in precision. When looking at the F2 value, we can see that the tool only notably outperforms the baseline on the three topics \textit{Drones in Agriculture}, \textit{Sustainable Bio Fuel Economy}, and \textit{Multicore Performance Prediction}, whereas it shows a clear disadvantage on the topics \textit{Perovskite Solar Cells Stability}, \textit{Robotic Arthroplasty}, and \textit{Cervical Myelopathy}.}
@@ -66,9 +68,36 @@ While the SQW demonstrates advantages in terms of recall, its over-expansion oft
 \end{table}
 
 
-\begin{figure}
-	\centering	
-	\includegraphics[scale=0.7]{pics/all-metrics-1.pdf}
-	\caption[Evaluation: Experiment 1]{This figure shows the results of the first experiment across all the datasets. Initially, the issue with the clustering precision metric becomes apparent in cases such as \textit{Cloud Migration} and \textit{Multicore Performance Prediction}, where the value reaches 1, indicating that all retrieved documents are deemed relevant. This occurs due to low recall and the predefined threshold. However, when examining the other precision metrics, some correlation between them is observed. The impact of the crafted F2 score is particularly evident in cases like \textit{Robotic Arthroplasty}, where the baseline score is very high. Conversely, for the predicted query—which retrieves more publications but maintains the same recall—the score is significantly lower.}\label{fig:all-metrics-1}
-\end{figure}
+The results of the second experiment, which compare the actual search queries used to identify the core publications in the SLRs, have yielded surprising yet explainable outcomes. It is important to re-emphasize that the queries initially used for the SLRs were adapted to fit dimension's query criteria and were only applied to search the title and abstract. In contrast, the original queries were utilized across a variety of search indices, such as title, abstract, full text, and sometimes full data for specific fields, which is a form query fine-tuning that is search engine specific. Therefore, it is important to note that the results will always be search engine dependent, which, in this case, is dimensions.ai.
+
+As shown in \autoref{fig:all-metrics-2}, the results of the SLR queries are not as anticipated, particularly since they were expected to yield high recall. This discrepancy arises from the queries' reconstruction and adaptation to fit dimensions' criteria. The performance difference between the SLR queries and the baseline can be observed in \autoref{table:expirment-2}. Overall, the baseline and the SLR queries performed on nearly equal footing, with two topics favoring the SLR and three favoring the baseline. 
+
+Interestingly, in case where the recall of the baseline significantly outperformed the SLR, namely \textit{Software Fault Prediction Metrics}, the cosine precision was drastically lower. This results in an unwanted behavior which can be interpreted by the cosine-F2 score being 0, indicating that the recall gain was of no value due to the excessive number of irrelevant retrieved publications.
+
+\begin{table}
+	\caption{This table displays the differences in values between the predicted query from the SLR and the baseline, where a negative value indicates that the baseline performs better.}
+	\tiny
+	\centering
+	\hspace*{-1cm}
+	\begin{tabular}{p{3cm}c|cccc|cccc}
+		& & \multicolumn{4}{c|}{\textbf{Precision}} & \multicolumn{4}{c}{\textbf{F2}} \\ \cline{1-10}
+		\multicolumn{1}{c}{\centering \textbf{Topic}} &
+		\multicolumn{1}{p{1cm}|}{\centering \textbf{Recall}} &
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Cosine}} &
+		\multicolumn{1}{p{1.2cm}}{\centering \textbf{Clustering}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{MVEE}} & 
+		\multicolumn{1}{p{0.8cm}|}{\centering \textbf{Hull}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Cosine}} & 
+		\multicolumn{1}{p{1.2cm}}{\centering \textbf{Clustering}} & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{MVEE}}  & 
+		\multicolumn{1}{p{0.8cm}}{\centering \textbf{Hull}}  \\ \hline 
+		\centering{Software Process Line} &  -0.232 & \textbf{0.286} & \textbf{0.319} & \textbf{0.162} & \textbf{0.194} & \textbf{0.250} & \textbf{0.140} & \textbf{0.290} & \textbf{0.360} \\
+		\centering{Data Stream Processing Latency} &  -0.073 &  -0.008 &  -0.321 &  -0.157 &  -0.125 &  -0.070 &  -0.100 &  -0.160 &  -0.160 \\
+		\centering{Business Process Meta Models} & \textbf{0.269} & \textbf{0.039} &  -0.082 & \textbf{0.421} & \textbf{0.281} & \textbf{0.190} & \textbf{0.090} & \textbf{0.390} & \textbf{0.390} \\
+		\centering{Multicore Performance Prediction} & 0.000 & \textbf{0.217} & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+		\centering{Cloud Migration} & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+		\centering{Software Fault Prediction Metrics} & \textbf{0.562} &  -0.596 & \textbf{0.061} & \textbf{0.005} & 0.000 & 0.000 & \textbf{0.330} &  -0.040 &  -0.020 \\
+		\centering{Software Defect Prediction} &  -0.129 &  -0.584 &  -0.446 &  -0.619 &  -0.491 &  -0.280 &  -0.210 &  -0.750 &  -0.750 \\
+	\end{tabular}\label{table:expirment-2}
+\end{table}
 \section{Discussion}
