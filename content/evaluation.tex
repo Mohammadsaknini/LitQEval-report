@@ -100,4 +100,14 @@ Interestingly, in case where the recall of the baseline significantly outperform
 		\centering{Software Defect Prediction} &  -0.129 &  -0.584 &  -0.446 &  -0.619 &  -0.491 &  -0.280 &  -0.210 &  -0.750 &  -0.750 \\
 	\end{tabular}\label{table:expirment-2}
 \end{table}
+
 \section{Discussion}
+In this work, we developed and tested various metrics to evaluate literature search queries, particularly considering their often overly expressive nature, which typically results in retrieving an excessive number of publications. These publications often require manual filtering through quantitative analysis or abstract screening, which can be tedious. Therefore, semantic precision metrics were designed to help identify documents relevant to a topic, given a set of core publications that well represent the field and its related research questions.
+
+This work is part of a larger initiative, the Search Query Writer (SQW), developed by Fraunhofer. The initiative aims to automate or at least semi-automate the process of writing literature queries to accelerate research on newer topics and provide a quick start. Since the primary focus of this study was on developing a pipeline to evaluate search queries rather than testing the performance of the SQW, there are several unexplored options for enhancing the SQW. These include using the second step, Iterative Scientific Fine-Tuning, which could further improve its performance. Additionally, optional inputs such as providing a description, uploading relevant publications, or adjusting model parameters (e.g., temperature for exploration) have yet to be tested.
+
+Beyond the SQW, the ability to evaluate the quality of retrieved publications opens new possibilities. For instance, it enables the development of chatbots designed to answer scientific questions using a combination of inputs, such as standard search queries or research questions. This could also involve allowing users to input a relevant publication, which could then serve as the basis for retrieving similar publications within a large semantic space, leveraging cosine similarity.
+
+Overall, this work lays a foundation for further advancements in tools that generate literature queries by providing a robust evaluation framework that balances both recall and precision.
+
+
