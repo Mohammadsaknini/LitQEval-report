@@ -26,12 +26,16 @@
 \pagenumbering{roman}
 \include{FrontBackmatter/title.tex}
 
+
 \begin{abstract}
-This work is based on a larger initiative known as the Search Query Writer (SQW), an internal tool developed at Fraunhofer INT to aid scientific researchers in creating comprehensive literature search queries. These queries are intended to provide researchers with a strong starting point in a topic area they may have limited knowledge about. 
-
-The current state of the SQW tool presents a key challenge: the absence of a mechanism to evaluate the quality of the generated queries. As a result, the evaluation has so far been conducted subjectively. This project aims to address this issue by introducing a dataset that contains publications deemed relevant to specific topics. Additionally, it introduces several metrics to account for different aspects of query evaluation, given the complexity of the task.\textbf{(Explain performed experiments after completing them)}
-
+	This work is part of the Search Query Writer (SQW) initiative by Fraunhofer INT, designed to assist researchers in generating comprehensive literature search queries, particularly in unfamiliar topic areas. A critical limitation in current literature search workflows is the absence of an objective evaluation framework for query performance, which has so far relied on subjective assessments or citation count. This study addresses this gap by introducing a curated dataset of core publications across multidisciplinary research fields and novel metrics to evaluate both recall and precision in query results.
+	
+	Recall traditionally dominates query evaluation, ensuring the retrieval of relevant publications. However, literature searches often yield excessively large result sets, complicating the identification of core documents. To address this, we introduce semantic precision, a metric that uses embedding spaces to identify true positives based on semantic similarity to core publications. 
+	
+	Our evaluation reveals that while SQW-generated queries outperform baselines in recall, they often suffer in precision, particularly when query expansion introduces irrelevant keywords. Nonetheless, the main goal of this  framework is to offer a systematic and automatic approach to assess literature search queries and paves the way for improving tools like SQW, enabling more effective literature query generation across diverse research domains.
 \end{abstract}
+
+
 
 \cleardoublepage
 \tableofcontents
