@@ -22,7 +22,7 @@ This process was repeated across all selected research fields, resulting in a da
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.75]{pics/dataset-overview.pdf}
-	\caption[Dataset overview of the research topics]{An overview of the dataset and the selected 21 research fields with respective core publications identified through bibliometric analyses or systematic literature review. The number in brackets following the field name on the x-axis represents the year of survey publication.}
+	\caption[Dataset Overview of the Research Topics]{An overview of the dataset and the selected 21 research fields with respective core publications identified through bibliometric analyses or systematic literature review. The number in brackets following the field name on the x-axis represents the year of survey publication.}
 	\label{fig:dataset-overview}
 \end{figure}
 
@@ -32,12 +32,12 @@ This process was repeated across all selected research fields, resulting in a da
 We recognize that potential biases may exist in our dataset due to its complete reliance on the bibliometric community for identifying core publications. This often implies that publications with higher citation counts are deemed more relevant. To assess this, we analyzed the citation distribution per topic, as provided by Dimensions, shown in \autoref{fig:dataset-citation}. Additionally, we examined the distribution of publication years per topic, illustrating the time span considered in the bibliometric analyses, as shown in \autoref{fig:dataset-years}.  If we compare the distribution of publication years for the medical research field \textit{Cervical Myelopathy} with that of \textit{IoT in Healthcare}, both of which were published in 2018, we can observe distinct differences in the year distributions of their core publications. These variations may be attributed to factors such as the recency of the field, changes in terminology over time, or the nature of the research area, where one field may prioritize more established works while the other focuses on recent advancements.
 
 
-For the evaluation pipeline that we will introduce, the embeddings of the core documents are essential for effectively assessing the search query, as detailed in \autoref{sec:eval-metrics}. To validate this approach, we examine the clustered embeddings of the titles and abstracts for each core topic, as well as the bibliometric analyses in which these documents were initially referenced. This enables us to assess whether core publications within each field exhibit semantic similarity while also demonstrating some degree of dissimilarity from publications in other topics. The resulting clusters, shown in \autoref{fig:dataset-clustering}, were generated using k-means clustering, where $k$ is set to the number of topics. For this, we use OpenAI's small embeddings model alongside t-SNE\autocite{van2008visualizing} to reduce the dimensionality to 2D.
+For the evaluation pipeline that we will introduce, the embeddings of the core documents are essential for effectively assessing the search query, as detailed in \autoref{sec:eval-metrics}. To validate this approach, we examine the clustered embeddings of the titles and abstracts for each core topic, as well as the bibliometric analyses in which these documents were initially referenced. This enables us to assess whether core publications within each field exhibit semantic similarity while also demonstrating some degree of dissimilarity from publications in other topics. The resulting clusters, shown in \autoref{fig:dataset-clustering}, were generated using k-means clustering, where $k$ is set to the number of topics. For this, we use OpenAI's small embeddings model alongside UMAP\autocite{mcinnes2020umap} to reduce the dimensionality to 2D.
 
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.6]{pics/umap_clustering.pdf}
-	\caption[Core Publications Clustering]{This figure shows clusters of publication embeddings based on titles and abstracts, the ones marked with o are from the BAs and X from SLRs . Embeddings were generated with OpenAI's small model and reduced in dimensionality with UMAP, then clustered using k-means with $k=21$ (indicating topic count). Clusters group core publications by semantic similarity, with overlaps in topics like \textit{IoT in Healthcare} and \textit{AI on Edge Devices}, as well as most of the SLR topic, due to the similarity in the research field.}
+	\caption[Core Publications Clustering]{This figure shows clusters of publication embeddings based on titles and abstracts, the ones marked with o are from the BAs and X from SLRs. Embeddings were generated with OpenAI's small model and reduced in dimensionality with UMAP, then clustered using k-means with $k=21$ (indicating topic count). Clusters group core publications by semantic similarity, with overlaps in topics like \textit{IoT in Healthcare} and \textit{AI on Edge Devices}, as well as most of the SLR topic, due to the similarity in the research field.}
 	\label{fig:dataset-clustering}
 \end{figure}
 
@@ -56,7 +56,7 @@ The idea behind Semantic Precision is to evaluate the relevance of retrieved pub
 
 \subsubsection{Semantic Cosine Precision}
 
-The first approach involves averaging the embeddings of the core publications. We then set an acceptance threshold based on the cosine similarity to the least similar core publication, given by. This means that if the embedding of a retrieved publication is more similar to the center than the least similar core publication, we consider it a relevant publication, as shown in \autoref{fig:sp-cos}. We define:
+The first approach involves averaging the embeddings of the core publications. We then set an acceptance threshold based on the cosine similarity to the least similar core publication. This means that if the embedding of a retrieved publication is more similar to the center than the least similar core publication, we consider it a relevant publication, as shown in \autoref{fig:sp-cos}. To do so we define:
 \begin{itemize}
 	\item $CPs$ as the set of core publications.
 	\item $\vec{c_i}$ as the embedding vector of the $i$-th core publication.
@@ -92,7 +92,7 @@ The Minimum Volume Enclosing Ellipsoid (MVEE) for the core publication set $CP$ 
 \[
 (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1
 \]
-Semantic Precision (SP) for this approach is then:
+Semantic Precision MVEE ($SP_{MVEE}$) for this approach is then:
 
 \begin{equation}\label{eq:sp-mvee}
 	\text{SP}_{\text{MVEE}} = \frac{\sum_{\vec{p} \in \text{pubs}} \mathbb{I} \left( (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1 \right)}{|\text{pubs}|}
@@ -127,12 +127,12 @@ The decay function is expressed as:
 \begin{figure}[h!]
 	\centering	
 	\includegraphics[scale=0.7]{pics/decay_function.pdf}
-	\caption[Decay function for semantic precision]{This illustration demonstrates the effect of the decay factor, which ensures that the contribution of a large number of publications diminishes as the total count approaches the threshold. This prevents an overwhelming volume from biasing the semantic precision. For this example, we set the threshold (\( \alpha \)) to 50k, \( p=1.5 \), and \( q=10 \).}	
+	\caption[Decay Function for Semantic Precision]{This illustration demonstrates the effect of the decay factor, which ensures that the contribution of a large number of publications diminishes as the total count approaches the threshold. This prevents an overwhelming volume from biasing the semantic precision. For this example, we set the threshold (\( \alpha \)) to 50k, \( p=1.5 \), and \( q=10 \).}	
 	\label{fig:decay-function}
 \end{figure}
 
 
-Now that we have metrics that can be used penalizes the model in case of generating a too broad of a query, we use can use it as a factor to calculate the F-Score, the goal of the standard F-score is to balance out between the recall and precision, but in our case we use $F-\beta$ instead, whereby the $\beta$ is the weighting factor of the recall, meaning the higher it is the more important the recall will be, in our case we set it to be 2, meaning that the recall is twice as important as the precision.
+Now that we have metrics that can be used penalizes the model in case of generating a too broad of a query, we use can use it as a factor to calculate the F-Score, the goal of the standard F-score is to balance out between the recall and precision, but in our case we use $F_\beta$ instead, whereby the $\beta$ is the weighting factor of the recall, meaning the higher it is the more important the recall will be, in our case we set it to be 2, meaning that the recall is twice as important as the precision.
 \begin{equation}\label{eq:f-beta}
 F_\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{(\beta^2 \cdot \text{Precision}) + \text{Recall}}
 \end{equation}
@@ -155,7 +155,7 @@ To further understand the metrics and their impact on evaluating the dataset, we
 \subsubsection{Semantic Cosine Precision}
 At first, we test the Semantic Cosine Precision using the high-dimensional original embedding $E_o$, which was done as described in \autoref{eq:sp-cosine}. This resulted in 13,265 out of 17,573 publications being classified as relevant \autoref{fig:sr-cosine-baseline}. However, this high proportion of relevant publications appeared excessive, prompting further investigation into the threshold's effect on the number of semantically relevant documents.
 
-Since we aim to use the $F_2$ score as our primary evaluation metric, we also employed it as a cost function to maximize. The goal was to identify the optimal empirical threshold that balances the retrieval of core publications with the number of relevant publications. To achieve this, we used the inverse precision, defined as $\frac{\text{Total Retrieved Publications}}{\text{Number of Relevant Publications}}$, instead of standard precision. The results \autoref{fig:threshold-analysis} reveal that a threshold maximizing the number of retrieved core publications while minimizing false positives is approximately 0.69. This suggests that sometimes sacrificing a couple of core publications is rewarding because it allows us to reduce the total number of semantically relevant publications.
+Since we aim to use the $F_2$ score as our primary evaluation metric, we also factored it in the cost function which we want to maximize. The goal was to identify the optimal empirical threshold that balances the retrieval of core publications with the number of relevant publications. To achieve this, we used the inverse precision, defined as {\scriptsize$\frac{\text{Total Retrieved Publications}}{\text{Number of Relevant Publications}}$}, instead of standard precision. The results \autoref{fig:threshold-analysis} reveal that a threshold maximizing the number of retrieved core publications while minimizing false positives is approximately 0.69. This suggests that sometimes sacrificing a couple of core publications is rewarding because it allows us to reduce the total number of semantically relevant publications.
 
 \begin{figure}
 	\centering	
@@ -167,7 +167,7 @@ After setting the threshold to the optimal empirical value, the Semantic Cosine 
 
 \subsubsection{Semantic MVEE Precision}
 
-In contrast to Semantic Cosine Precision, we opt to use the 2D embeddings generated by UMAP $E_{umap}$, rather than the original high-dimensional embeddings, $E_o$. This decision was made because earlier evaluations of the dataset showed that the MVEE consistently classified at least 50\% of the total retrieved documents as relevant, which we believe is related to the high-dimensional nature of the embedding vectors.
+In contrast to Semantic Cosine Precision, we opt to use the 2D embeddings generated by UMAP $E_{umap}$, rather than the original high-dimensional embeddings, $E_o$. This decision was made because earlier evaluations of the dataset showed that the MVEE consistently classified at least 50\% of the total retrieved documents as relevant, which we believe is related to the high-dimensional nature of the embedding vectors and the fact that their norm always up to one, meaning that they have a constant magnitude.
 
 We experiment with two enclosing shapes: the MVEE and a Convex Hull. The primary difference is that the MVEE tends to be larger due to its ellipsoidal shape, whereas the convex hull strictly bounds the points. Using the MVEE approach, 9,595 publications were identified as relevant out of the total 17,573 publications, as shown in \autoref{fig:sr-mvee-baseline}. In contrast, the convex hull, being smaller as expected, identified 7,609 publications as relevant, as illustrated in \autoref{fig:sr-hull-baseline}.
 
@@ -177,12 +177,12 @@ We experiment with two enclosing shapes: the MVEE and a Convex Hull. The primary
 	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the Minimum Volume Enclosing Ellipsoid (MVEE). An advantage of this approach is that we always expect that all teh core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
 \end{figure}
 
-For further evaluation, understanding the quality of the UMAP embeddings ($E_{UMAP}$) is crucial, as they do not retain the same level of semantic meaning as the original higher-dimensional embeddings ($E_o$). Unlike PCA, which is a linear transformation, calculating the exact semantic loss for UMAP embeddings is challenging due to its nonlinear nature. To approximate this loss, we utilized a Partial Least Squares Regression approach as outlined by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}. Based on this method, we estimated that the explained variance of the two-dimensional UMAP embeddings is only 7.15\%. This low explained variance underscores the significant reduction in information captured when transitioning from high-dimensional to two-dimensional space.
+For further evaluation, understanding the quality of the UMAP embeddings ($E_{umap}$) is crucial, as they do not retain the same level of semantic meaning as the original higher-dimensional embeddings ($E_o$). Unlike PCA, which is a linear transformation, calculating the exact semantic loss for UMAP embeddings is challenging due to its nonlinear nature. To approximate this loss, we utilized a Partial Least Squares Regression approach as outlined by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}. Based on this method, we estimated that the explained variance of the two-dimensional UMAP embeddings is only 7.15\%. This low explained variance underscores the significant reduction in information captured when transitioning from high-dimensional to two-dimensional space.
 
 
 \subsubsection{Semantic Clustering Precision}
 
-To cluster the embeddings, we use K-means for $2 \leq K \leq 100$, iteratively determining the smallest possible cluster containing at least 70\% of the core publications which is the threshold $\theta$ described in \autoref{eq:sp-clustering}. For this process, we use the high-dimensional embeddings, $E_o$, as input. Cosine similarity is used as the distance measure between points which requires input normalization, which is already facilitated by the output of OpenAI's text-embedding-3-small model.
+To cluster the embeddings, we use K-means for $2 \leq K \leq 100$, iteratively determining the smallest possible cluster containing at least 70\% of the core publications which is the threshold $\theta$ described in \autoref{eq:sp-clustering}. For this process, we use the high-dimensional embeddings, $E_o$, as input. Cosine similarity is used as the distance measure between points which requires input normalization, which is already done by the output of OpenAI's text-embedding-3-small model.
 
 \begin{figure}[!hb]
 	\centering	
@@ -192,13 +192,13 @@ To cluster the embeddings, we use K-means for $2 \leq K \leq 100$, iteratively d
 
 The clustering results \autoref{fig:sr-clustering-baseline} indicate that the space can be divided into 5 groups. The best group has a size of 4,954 out of 17,573 publications and contains 15 out of the 20 core publications. We experimented with adjusting the threshold to match the quality of cosine similarity by increasing it to the next best solutions. At a threshold of approximately 0.75, the results included 6,861 publications with 17 core publications. At a threshold of approximately 0.85, all 17,573 publications were clustered together.
 
-Additionally, we clustered the UMAP embeddings, $E_{UMAP}$, using the same thresholds (0.7, 0.75, and 0.85). These thresholds consistently yielded similar results, with 11,644 out of 17,573 publications identified as relevant and 19 out of the 20 core publications included. This consistency can serve as an indicator of the information loss incurred when using UMAP.
+Additionally, we clustered the UMAP embeddings, $E_{umap}$, using the same thresholds (0.7, 0.75, and 0.85). These thresholds consistently yielded similar results, with 11,644 out of 17,573 publications identified as relevant and 19 out of the 20 core publications included. This consistency can serve as an indicator of the information loss incurred when using UMAP.
 
-As mentioned in \autoref{sec:eval-metrics}, the $F_{\beta}$ score is the metric we will use for evaluation, with $\beta=2$, emphasizing recall by making it twice as important as precision. However, we extend the traditional $F_{\beta}$ score by incorporating components such as semantic precision in place of typical precision and introducing a decay factor to account for the number of semantically relevant retrieved publications. To better understand the influence of each component, we visualize their effects in \autoref{fig:f-score}.
+As mentioned in \autoref{sec:eval-metrics}, the $F_{\beta}$ score is the metric we will use for evaluation, with $\beta=2$, emphasizing recall by making it twice as important as precision. However, we extended the traditional $F_{\beta}$ score by incorporating components such as semantic precision in place of typical precision and a decay factor to account for the number of semantically relevant retrieved publications. To better understand the influence of each component, we visualize their effects in \autoref{fig:f-score}.
 
 \begin{figure}[!hb]
-	\centering	
+	\hspace*{-1cm}
 	\includegraphics[scale=0.7]{pics/f_score.pdf}
-	\caption[$F_{\beta}$ components analysis]{This illustration demonstrates the effect of each component in the $F_{\beta}$ score evaluation metric, where $\beta=2$ and the decay hyperparameters are set to $p=1.5$, $q=10$, and $\alpha=50000$. In the top left, we observe the impact of $\beta=2$, which ensures better scaling even with lower precision if the recall is 1. The top right plot shows how the score scales almost linearly with the precision. The bottom left and right plots depict the dampening effect on the $F_{\beta}$ score as the number of relevant publications increases, emphasizing the importance of controlling the decay to prevent inflated scores from overly large results.}\label{fig:f-score}
+	\caption[$F_{\beta}$ Components Analysis]{This illustration demonstrates the effect of each component in the $F_{\beta}$ score evaluation metric, where $\beta=2$ and the decay hyperparameters are set to $p=1.5$, $q=10$, and $\alpha=50000$. In the top left, we observe the impact of $\beta=2$, which ensures better scaling even with lower precision if the recall is 1. The top right plot shows how the score scales almost linearly with the precision. The bottom left and right plots depict the dampening effect on the $F_{\beta}$ score as the number of relevant publications increases, emphasizing the importance of controlling the decay to prevent inflated scores from overly large results.}\label{fig:f-score}
 \end{figure}
 

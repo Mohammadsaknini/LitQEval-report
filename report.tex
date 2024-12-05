@@ -28,11 +28,7 @@
 
 
 \begin{abstract}
-	This work is part of the Search Query Writer (SQW) initiative by Fraunhofer INT, designed to assist researchers in generating comprehensive literature search queries, particularly in unfamiliar topic areas. A critical limitation in current literature search workflows is the absence of an objective evaluation framework for query performance, which has so far relied on subjective assessments or citation count. This study addresses this gap by introducing a curated dataset of core publications across multidisciplinary research fields and novel metrics to evaluate both recall and precision in query results.
-	
-	Recall traditionally dominates query evaluation, ensuring the retrieval of relevant publications. However, literature searches often yield excessively large result sets, complicating the identification of core documents. To address this, we introduce semantic precision, a metric that uses embedding spaces to identify true positives based on semantic similarity to core publications. 
-	
-	Our evaluation reveals that while SQW-generated queries outperform baselines in recall, they often suffer in precision, particularly when query expansion introduces irrelevant keywords. Nonetheless, the main goal of this  framework is to offer a systematic and automatic approach to assess literature search queries and paves the way for improving tools like SQW, enabling more effective literature query generation across diverse research domains.
+	This work is part of the Search Query Writer (SQW) initiative by Fraunhofer INT, designed to assist researchers in generating comprehensive literature search queries, particularly in unfamiliar topic areas. A critical limitation in current literature search workflows is the absence of an objective evaluation framework for query performance, which has so far relied on subjective assessments or citation count. This study addresses this gap by introducing a curated dataset of core publications across multidisciplinary research fields and novel metrics to evaluate both recall and precision in query results. Recall traditionally dominates query evaluation, ensuring the retrieval of relevant publications. However, literature searches often yield excessively large result sets, complicating the identification of core documents. To address this, we introduce semantic precision, a metric that uses embedding spaces to identify true positives based on semantic similarity to core publications. Our evaluation reveals that while SQW-generated queries outperform the baseline in recall, they often suffer in precision, particularly when query expansion introduces irrelevant keywords. Nonetheless, the main goal of this  framework is to offer a systematic and automatic approach to assess literature search queries and paves the way for improving tools like SQW, enabling more effective literature query generation across diverse research domains.
 \end{abstract}
 
 
@@ -71,7 +67,7 @@
 \begin{figure}
 	\centering	
 	\includegraphics{pics/citation-distribution.pdf}
-	\caption[Field citation ratio per topic]{The citation ratio per topic, showing the relative citation counts of core publications compared to the average citation frequency within their respective research fields. This illustrates how the prominence of each publication compares to typical citation levels in its field.}
+	\caption[Field Citation Ratio per Topic]{The citation ratio per topic, showing the relative citation counts of core publications compared to the average citation frequency within their respective research fields. This illustrates how the prominence of each publication compares to typical citation levels in its field.}
 	\label{fig:dataset-citation}
 \end{figure}
 
