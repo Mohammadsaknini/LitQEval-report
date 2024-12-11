@@ -1,4 +1,4 @@
-\chapter{LitQEval}\label{ch:ownApproach}
+{\let\clearpage\relax \chapter{LitQEval}\label{ch:ownApproach}}
 Despite ongoing research on automatic literature query generation and related evaluations with medical datasets, such as CLEF \autocite{kanoulas2017clef, kanoulas2018clef, kanoulas2019clef} and the Collection of Seeds \autocite{Wang_2022}, the insights gained from these evaluation metrics are not particularly compelling for our use case. This limitation arises from two main factors. 
 
 First, the CLEF and Collection of Seeds datasets are exclusively focused on medical data. Although Badami's work \autocite{badami2023adaptive} offers a more diverse dataset, it lacks a suitable evaluation metric. Their evaluation primarily aims to maximize recall, with minimal consideration for precision, as literature search queries often yield far more results than necessary, making precision a less effective measure in this context. 
@@ -159,7 +159,7 @@ Since we aim to use the $F_2$ score as our primary evaluation metric, we also fa
 
 \begin{figure}
 	\centering	
-	\includegraphics[scale=0.7]{pics/threshold-analysis.pdf}
+	\includegraphics[scale=0.6]{pics/threshold-analysis.pdf}
 	\caption[Semantic Cosine Threshold: Empirical Analysis]{This figure illustrates the effect of the threshold on the $F_2$ score. As the threshold increases, the number of semantically relevant publications and core publications identified decreases. However, in some cases, such as \textit{Perovskite Solar Cells Stability}, the $F_2$ score continues to improve despite the loss of a core publication. This outcome is due to the $F_2$ score weighting recall twice as much as precision, allowing for stricter relevance criteria while sacrificing a single core publication.}\label{fig:threshold-analysis}
 \end{figure}
 
@@ -196,9 +196,8 @@ Additionally, we clustered the UMAP embeddings, $E_{umap}$, using the same thres
 
 As mentioned in \autoref{sec:eval-metrics}, the $F_{\beta}$ score is the metric we will use for evaluation, with $\beta=2$, emphasizing recall by making it twice as important as precision. However, we extended the traditional $F_{\beta}$ score by incorporating components such as semantic precision in place of typical precision and a decay factor to account for the number of semantically relevant retrieved publications. To better understand the influence of each component, we visualize their effects in \autoref{fig:f-score}.
 
-\begin{figure}[!hb]
-	\hspace*{-1cm}
-	\includegraphics[scale=0.7]{pics/f_score.pdf}
+\begin{figure}
+	\includegraphics[width=400px, height=200px]{pics/f_score.pdf}
 	\caption[$F_{\beta}$ Components Analysis]{This illustration demonstrates the effect of each component in the $F_{\beta}$ score evaluation metric, where $\beta=2$ and the decay hyperparameters are set to $p=1.5$, $q=10$, and $\alpha=50000$. In the top left, we observe the impact of $\beta=2$, which ensures better scaling even with lower precision if the recall is 1. The top right plot shows how the score scales almost linearly with the precision. The bottom left and right plots depict the dampening effect on the $F_{\beta}$ score as the number of relevant publications increases, emphasizing the importance of controlling the decay to prevent inflated scores from overly large results.}\label{fig:f-score}
 \end{figure}
 
