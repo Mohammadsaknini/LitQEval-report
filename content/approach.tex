@@ -5,40 +5,39 @@ First, the CLEF and Collection of Seeds datasets are exclusively focused on medi
 
 A second limitation arises when recall is prioritized exclusively. For example, if we aim to train a model to generate queries that maximize recall, there is no penalty for generating overly broad queries, such as those that exploit wildcards, which could lead to an excessive number of irrelevant results.
 
-To address these issues, we introduce a dataset structured similarly to that of Badami \autocite{badami2023adaptive} but designed to be more comprehensive and covering a wider range of topics. Alongside this dataset, we propose new evaluation metrics that account for the inherently broad nature of literature search queries while penalizing excessively large queries. These metrics also emphasize the importance of accurately identifying core publications that are considered highly relevant within the domain.
+To address these issues, we introduce a dataset structured similarly to that of Badami \autocite{badami2023adaptive} but designed to be more comprehensive and covering a wider range of research fields. Alongside this dataset, we propose new evaluation metrics that account for the inherently broad nature of literature search queries while penalizing excessively large queries. These metrics also emphasize the importance of accurately identifying core publications that are considered highly relevant within the field.
 
-
-\section{Dataset}\label{sec:dataset}
+\vspace*{0.5cm}\section{Dataset}\label{sec:dataset}
 The dataset we aim to create has three primary goals: First, it should encompass a wide range of randomly selected scientific research fields. Second, for each selected field, it should contain a set of highly relevant publications to serve as the CPs for evaluating additional publications found in these areas. Lastly, the data should consider different research intents, meaning publication that is considered relevant by a bibliometric analysis might not be relevant for a Systematic Literature Review (SLR) work.
 
-Selecting new research topics is straightforward; however, to avoid bias from ongoing research interests, we used ChatGPT to generate a list of scientific fields that are recent and not overly broad. For instance, a topic like \textit{Artificial Intelligence} is vast, making it challenging to accurately and comprehensively identify core publications. Instead, we chose a more specific, problem-focused topics such as \textit{Drones in Agriculture}. To search for the corresponding bibliometric analysis we used the following query: \textit{<FIELD> AND ("Bibliometric" OR "Scientometric" OR "Systematic literature" OR "Most Influential" OR "Most Cited" OR "Scientific Landscape" OR "Literature Landscape" OR "Core Literature")} 
+Selecting new research field is straightforward; however, to avoid bias from ongoing research interests, we used ChatGPT to generate a list of scientific fields that are recent and not overly broad. For instance, a field like \textit{Artificial Intelligence} is vast, making it challenging to accurately and comprehensively identify core publications. Instead, we chose a more specific, problem-focused fields such as \textit{Drones in Agriculture}. To search for the corresponding bibliometric analysis we used the following query: \textit{<FIELD> AND ("Bibliometric" OR "Scientometric" OR "Systematic literature" OR "Most Influential" OR "Most Cited" OR "Scientific Landscape" OR "Literature Landscape" OR "Core Literature")} 
 
 
-After identifying a sufficient number of diverse fields, 14 in our case, we sought to collect core publications for each field. Due to the difficulty of gathering core publications across a broad array of topics, we leveraged the bibliometrics community’s expertise. Specifically, we searched for bibliometric studies that identify the most relevant publications within each research area. For example, a bibliometric analysis of \textit{Drones in Agriculture} \autocite{Rejeb2022} lists the most cited publications from 1990 to 2021. In this case, 40 core publications were identified, which we manually located on Dimensions.ai and added to our dataset, omitting any publications not found in Dimensions.
+After identifying a sufficient number of diverse fields, 14 in our case, we sought to collect core publications for each field. Due to the difficulty of gathering core publications across a broad array of fields, we leveraged the bibliometrics community’s expertise. Specifically, we searched for bibliometric studies that identify the most relevant publications within each research area. For example, a bibliometric analysis of \textit{Drones in Agriculture} \autocite{Rejeb2022} lists the most cited publications from 1990 to 2021. In this case, 40 core publications were identified, which we manually located on Dimensions.ai and added to our dataset, omitting any publications not found in Dimensions.
 
-This process was repeated across all selected research fields, resulting in a dataset comprising 14 topics, each containing 25–50 core publications, as shown in \autoref{fig:dataset-overview}. For the 
-SLR data, we used previously collected data \autocite{badami2023adaptive} in the field of Software Engineering. Notably, the SLR data used here were replicated by executing the original query in Dimensions. However, only 7 out of the 10 original datasets were included, with SLR 2, 5, and 6 omitted due to extreme variations between the original datasets and the results retrieved from Dimensions. For instance, SLR 2 originally contained 8,911 candidate papers, but when executed in Dimensions, it yielded approximately 200,000. Overall, the dataset consists of 21 topics.
+This process was repeated across all selected research fields, resulting in a dataset comprising 14 fields, each containing 25–50 core publications, as shown in \autoref{fig:dataset-overview}. For the 
+SLR data, we used previously collected data \autocite{badami2023adaptive} in the field of Software Engineering. Notably, the SLR data used here were replicated by executing the original query in Dimensions. However, only 7 out of the 10 original datasets were included, with SLR 2, 5, and 6 omitted due to extreme variations between the original datasets and the results retrieved from Dimensions. For instance, SLR 2 originally contained 8,911 candidate papers, but when executed in Dimensions, it yielded approximately 200,000. Overall, the dataset consists of 21 fields. This discrepancy is due to the fact that the search query in the original SLR work had many additional constraints along side the query string, such as the time span being limited between 2000 and 2010.
 
 
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.75]{pics/dataset-overview.pdf}
-	\caption[Dataset Overview of the Research Topics]{An overview of the dataset and the selected 21 research fields with respective core publications identified through bibliometric analyses or systematic literature review. The number in brackets following the field name on the x-axis represents the year of survey publication.}
+	\caption[Dataset Overview of the Research Fields]{An overview of the dataset and the selected 21 research fields with respective core publications identified through bibliometric analyses or systematic literature review. The number in brackets following the field name on the x-axis represents the year of survey publication.}
 	\label{fig:dataset-overview}
 \end{figure}
 
 
 \subsection{Dataset Analysis}
 
-We recognize that potential biases may exist in our dataset due to its complete reliance on the bibliometric community for identifying core publications. This often implies that publications with higher citation counts are considered more relevant. To assess this, we analyzed the citation distribution per topic, as provided by Dimensions, shown in \autoref{fig:dataset-citation}. Additionally, we examined the distribution of publication years per topic, illustrating the time span considered in the bibliometric analyses, as shown in \autoref{fig:dataset-years}.  If we compare the distribution of publication years for the medical research field \textit{Cervical Myelopathy} with that of \textit{IoT in Healthcare}, both of which were published in 2018, we can observe distinct differences in the year distributions of their core publications. These variations may be attributed to factors such as the recency of the field, changes in terminology over time, or the nature of the research area, where one field may prioritize more established works while the other focuses on recent advancements.
+We recognize that potential biases may exist in our dataset due to its complete reliance on the bibliometric community for identifying core publications. This often implies that publications with higher citation counts are considered more relevant. To assess this, we analyzed the citation distribution per field, as provided by Dimensions, shown in \autoref{fig:dataset-citation}. Additionally, we examined the distribution of publication years per field, illustrating the time span considered in the bibliometric analyses, as shown in \autoref{fig:dataset-years}.  If we compare the distribution of publication years for the medical research field \textit{Cervical Myelopathy} with that of \textit{IoT in Healthcare}, both of which were published in 2018, we can observe distinct differences in the year distributions of their core publications. These variations may be attributed to factors such as the recency of the field, changes in terminology over time, or the nature of the research area, where one field may prioritize more established works while the other focuses on recent advancements.
 
 
-For the evaluation pipeline that we will introduce, the embeddings of the core documents are essential for effectively assessing the search query, as detailed in \autoref{sec:eval-metrics}. To validate this approach, we examine the clustered embeddings of the titles and abstracts for each core topic, as well as the bibliometric analyses in which these documents were initially referenced. This enables us to assess whether core publications within each field exhibit semantic similarity while also demonstrating some degree of dissimilarity from publications in other topics. The resulting clusters, shown in \autoref{fig:dataset-clustering}, were generated using k-means clustering, where $k$ is set to the number of topics. For this, we use OpenAI's small embeddings model alongside UMAP\autocite{mcinnes2020umap} to reduce the dimensionality to 2D.
+For the evaluation pipeline that we will introduce, the embeddings of the core documents are essential for effectively assessing the search query, as detailed in \autoref{sec:eval-metrics}. To validate this approach, we examine the clustered embeddings of the titles and abstracts for each core publication, as well as the bibliometric analyses survey in which these documents were initially referenced. This enables us to assess whether core publications within each field exhibit semantic similarity while also demonstrating some degree of dissimilarity from publications in other fields. The resulting clusters, shown in \autoref{fig:dataset-clustering}, were generated using k-means clustering, where $k$ is set to the number of fields. For this, we use OpenAI's small embeddings model alongside UMAP\autocite{mcinnes2020umap} to reduce the dimensionality to 2D.
 
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.6]{pics/umap_clustering.pdf}
-	\caption[Core Publications Clustering]{This figure shows clusters of publication embeddings based on titles and abstracts, the ones marked with o are from the BAs and X from SLRs. Embeddings were generated with OpenAI's small model and reduced in dimensionality with UMAP, then clustered using k-means with $k=21$ (indicating topic count). Clusters group core publications by semantic similarity, with overlaps in topics like \textit{IoT in Healthcare} and \textit{AI on Edge Devices}, as well as most of the SLR topic, due to the similarity in the research field.}
+	\caption[Core Publications Clustering]{This figure shows clusters of publication embeddings based on titles and abstracts, the ones marked with o are from the BAs and X from SLRs. Embeddings were generated with OpenAI's small model and reduced in dimensionality with UMAP, then clustered using k-means with $k=21$. Clusters group core publications by semantic similarity, with overlaps in fields like \textit{IoT in Healthcare} and \textit{AI on Edge Devices}, as well as most of the SLR topic, due to the similarity in the research field.}
 	\label{fig:dataset-clustering}
 \end{figure}
 
@@ -59,15 +58,14 @@ The idea behind Semantic Precision is to evaluate the relevance of retrieved pub
 
 The first approach involves averaging the embeddings of the core publications. We then set an acceptance threshold based on the cosine similarity to the least similar core publication. This means that if the embedding of a retrieved publication is more similar to the center than the least similar core publication, we consider it a relevant publication, as shown in \autoref{fig:sp-cos}. To do so we define:
 \begin{itemize}
-	\item $CPs$ as the set of core publications.
-	\item $\vec{c_i}$ as the embedding vector of the $i$-th core publication.
-	\item $\vec{p}$ as the embedding vector of a retrieved publication.
+	\item $ECPs$ as the embeddings of the core publications.
+	\item $ERPs$ as the embeddings of the retrieved publications.
 	\item $\cos(\vec{a}, \vec{b})$ as the cosine similarity between two vectors $\vec{a}$ and $\vec{b}$.
 \end{itemize}
 
 First, compute the centroid of the core publication embeddings:
 \[
-\vec{c}_{\text{centroid}} = \frac{1}{|CPs|} \sum_{\vec{c_i} \in CPs} \vec{c_i}
+\vec{c}_{\text{centroid}} = \frac{1}{|ECPs|} \sum_{\vec{c_i} \in ECPs} \vec{c_i}
 \]
 Then, let the threshold similarity, $\theta$, be the cosine similarity of the least similar core publication to the centroid:
 \[
@@ -75,7 +73,7 @@ Then, let the threshold similarity, $\theta$, be the cosine similarity of the le
 \]
 Finally, Semantic Precision using cosine similarity ($SP_{cos}$) is defined as \autoref{eq:sp-cosine}, where $\mathbb{I}$ is an indicator function that equals 1 if the retrieved publication $\vec{r}$ meets the similarity criterion and 0 otherwise:
 \begin{equation}\label{eq:sp-cosine}
-	SP_{cos} = \frac{\sum_{\vec{p} \in \text{pubs}} \mathbb{I} \left( \cos(\vec{c}_{\text{centroid}}, \vec{p}) \geq \theta \right)}{|\text{retrieved}|}
+	SP_{cos} = \frac{\sum_{\vec{p} \in \text{ERPs}} \mathbb{I} \left( \cos(\vec{c}_{\text{centroid}}, \vec{p}) \geq \theta \right)}{|\text{ERPs}|}
 \end{equation}
 
 \begin{figure}[h!]
@@ -87,23 +85,23 @@ Finally, Semantic Precision using cosine similarity ($SP_{cos}$) is defined as \
 \end{figure}
 
 \subsubsection{Semantic MVEE Precision}
-For the second approach we omit the averaging of the embeddings and use Minimum Volume Enclosing Ellipsoid (MMVE), which creates the smallest ellipsoid that includes the our CP, which we then use to determine which of the retrieved publications are relevant by checking whether they are within MMVE or not, as illustrated in \autoref{fig:sp-mvee}. This approach allows us to take into account all the dimensions by not only considering the angle but also the magnitude
+For the second approach we omit the averaging of the embeddings and use Minimum Volume Enclosing Ellipsoid (MVEE), which creates the smallest ellipsoid that includes our CP, which we then use to determine which of the retrieved publications are relevant by checking whether they are within MMVE or not, as illustrated in \autoref{fig:sp-mvee}. This approach allows us to take into account all the dimensions by not only considering the angle but also the magnitude
 
-The Minimum Volume Enclosing Ellipsoid (MVEE) for the core publication set $CP$ is centered at $\delta$ with shape matrix $A$. To determine whether a retrieved publication $\vec{r}$ is relevant, we check if it lies within the ellipsoid by testing the following condition:
+The MVEE for the core publication set $CP$ is centered at $\delta$ with shape matrix $A$. To determine whether a retrieved publication $p$ is relevant, we check if it lies within the ellipsoid by testing the following condition:
 \[
 (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1
 \]
 Semantic Precision MVEE ($SP_{MVEE}$) for this approach is then:
 
 \begin{equation}\label{eq:sp-mvee}
-	\text{SP}_{\text{MVEE}} = \frac{\sum_{\vec{p} \in \text{pubs}} \mathbb{I} \left( (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1 \right)}{|\text{pubs}|}
+	\text{SP}_{\text{MVEE}} = \frac{\sum_{\vec{p} \in \text{ERPs}} \mathbb{I} \left( (\vec{p} - \delta)^T A (\vec{p} - \delta) \leq 1 \right)}{|\text{ERPs}|}
 \end{equation}
 
-Additionally, it is also possible to use a convex hull, which is the smallest convex set that encloses all the points by forming a polygon. A potential advantage of this approach is that it is more robust to outliers compared to the Minimum Volume Enclosing Ellipsoid (MVEE).
+Additionally, in the evaluation also use the convex hull, which is the smallest convex set that encloses all the points by forming a polygon rather than a ellipsoid. A potential advantage of this approach is that it is more robust to outliers compared to the MVEE.
 
 \subsubsection{Semantic Clustering Precision}
 
-For the final semantic precision approach, we apply a simple clustering algorithm, such as k-means, on the document embeddings. The process iteratively adjusts the number of clusters \( K \), starting with \( K=2 \), and increases \( K \) until a specific condition is met. We define a threshold \( \theta \) that determines the stopping criterion based on the number of core publications in the smallest cluster. Specifically, we stop when the number of core publications (\( CPs \)) in the smallest cluster satisfies the condition:
+For the final semantic precision approach, we apply a simple clustering algorithm, such as k-means, on the document embeddings. The process iteratively adjusts the number of clusters \( K \), starting with \( K=2 \), and increases \( K \) until a specific condition is met. We define a threshold \( \theta \), which is between 0 and 1, that determines the stopping criterion based on the number of core publications in the smallest cluster. Specifically, we stop when the number of core publications (\( CPs \)) in the smallest cluster satisfies the condition:
 \begin{equation}
 CPs \text{ in cluster smallest cluster} \leq \theta \cdot \text{Maximum possible } CPs
  \end{equation}\label{eq:sp-clustering}
@@ -175,7 +173,7 @@ We experiment with two enclosing shapes: the MVEE and a Convex Hull. The primary
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.6]{pics/sr-mvee-baseline.pdf}
-	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the Minimum Volume Enclosing Ellipsoid (MVEE). An advantage of this approach is that we always expect that all teh core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
+	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the MVEE. An advantage of this approach is that we always expect that all teh core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
 \end{figure}
 
 For further evaluation, understanding the quality of the UMAP embeddings ($E_{umap}$) is crucial, as they do not retain the same level of semantic meaning as the original higher-dimensional embeddings ($E_o$). Unlike PCA, which is a linear transformation, calculating the exact semantic loss for UMAP embeddings is challenging due to its nonlinear nature. To approximate this loss, we utilized a Partial Least Squares Regression approach as outlined by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}. Based on this method, we estimated that the explained variance of the two-dimensional UMAP embeddings is only 7.15\%. This low explained variance underscores the significant reduction in information captured when transitioning from high-dimensional to two-dimensional space.
