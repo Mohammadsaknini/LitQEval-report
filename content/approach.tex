@@ -42,7 +42,7 @@ For the evaluation pipeline that we will introduce, the embeddings of the core d
 \end{figure}
 
 \section{Evaluation metrics}\label{sec:eval-metrics}
-The standard evaluation metrics for query evaluation are recall and precision. We argue that while recall is of high importance, particularly within the community, precision in this context becomes less feasible. Specifically, retrieving only the exact core publications via a search query would be impractical without explicitly using DOIs to target them directly, which renders this metric largely obsolete and likely to be consistently low. However, we still aim to account for the number of matched publications when executing a search query to prevent models from exploiting overly large queries. To address this, we introduce the concept of \textit{Semantic Precision}.
+The standard evaluation metrics for query evaluation are recall and precision. We argue that while recall is of high importance, particularly within the community, precision in this context becomes less feasible. Specifically, retrieving only the exact core publications via a search query would be impractical without explicitly using DOIs to target them directly, which makes this likely to be consistently low. However, we still aim to account for the number of matched publications when executing a search query to prevent models from exploiting overly large queries. To address this, we introduce the concept of \textit{Semantic Precision}.
 
 The idea behind Semantic Precision is to evaluate the relevance of retrieved publications in comparison to the core publication set. If the retrieved publications are sufficiently similar to those in the core set, they are deemed to hold some relevance rather than being entirely unrelated. To achieve this, we assume that the core publications, encompass sufficient semantic breadth to gauge the quality of literature relevant to a specific field. We calculate Semantic Precision in three ways.
 
@@ -85,7 +85,7 @@ Finally, Semantic Precision using cosine similarity ($SP_{cos}$) is defined as \
 \end{figure}
 
 \subsubsection{Semantic MVEE Precision}
-For the second approach we omit the averaging of the embeddings and use Minimum Volume Enclosing Ellipsoid (MVEE), which creates the smallest ellipsoid that includes our CP, which we then use to determine which of the retrieved publications are relevant by checking whether they are within MMVE or not, as illustrated in \autoref{fig:sp-mvee}. This approach allows us to take into account all the dimensions by not only considering the angle but also the magnitude
+For the second approach we omit the averaging of the embeddings and use Minimum Volume Enclosing Ellipsoid (MVEE), which creates the smallest ellipsoid that includes our CP, which we then use to determine which of the retrieved publications are relevant by checking whether they are within MVEE or not, as illustrated in \autoref{fig:sp-mvee}. This approach allows us to take into account all the dimensions by not only considering the angle but also the magnitude
 
 The MVEE for the core publication set $CP$ is centered at $\delta$ with shape matrix $A$. To determine whether a retrieved publication $p$ is relevant, we check if it lies within the ellipsoid by testing the following condition:
 \[
@@ -131,7 +131,7 @@ The decay function is expressed as:
 \end{figure}
 
 
-Now that we have metrics that can be used penalizes the model in case of generating a too broad of a query, we use can use it as a factor to calculate the F-Score, the goal of the standard F-score is to balance out between the recall and precision, but in our case we use $F_\beta$ instead, whereby the $\beta$ is the weighting factor of the recall, meaning the higher it is the more important the recall will be, in our case we set it to be 2, meaning that the recall is twice as important as the precision.
+Now that we have metrics that can be used to penalize the model in case of generating a too broad of a query, we use can use it as a factor to calculate the F-Score, the goal of the standard F-score is to balance out between the recall and precision, but in our case we use $F_\beta$ instead, whereby the $\beta$ is the weighting factor of the recall, meaning the higher it is the more important the recall will be, in our case we set it to be 2, meaning that the recall is twice as important as the precision.
 \begin{equation}\label{eq:f-beta}
 F_\beta = (1 + \beta^2) \cdot \frac{\text{Precision} \cdot \text{Recall}}{(\beta^2 \cdot \text{Precision}) + \text{Recall}}
 \end{equation}
@@ -173,7 +173,7 @@ We experiment with two enclosing shapes: the MVEE and a Convex Hull. The primary
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.6]{pics/sr-mvee-baseline.pdf}
-	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the MVEE. An advantage of this approach is that we always expect that all teh core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
+	\caption[Semantic MVEE: Soft Robotics]{This figure shows the relevant publications identified by the MVEE. An advantage of this approach is that we always expect that all the core publications to be included in the identified publications.}\label{fig:sr-mvee-baseline}
 \end{figure}
 
 For further evaluation, understanding the quality of the UMAP embeddings ($E_{umap}$) is crucial, as they do not retain the same level of semantic meaning as the original higher-dimensional embeddings ($E_o$). Unlike PCA, which is a linear transformation, calculating the exact semantic loss for UMAP embeddings is challenging due to its nonlinear nature. To approximate this loss, we utilized a Partial Least Squares Regression approach as outlined by Oskolkov\footnote{\url{https://towardsdatascience.com/umap-variance-explained-b0eacb5b0801}}. Based on this method, we estimated that the explained variance of the two-dimensional UMAP embeddings is only 7.15\%. This low explained variance underscores the significant reduction in information captured when transitioning from high-dimensional to two-dimensional space.
