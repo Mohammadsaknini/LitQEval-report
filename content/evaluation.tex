@@ -14,6 +14,12 @@ The second experiment focuses exclusively on the 7 SLR topics. It uses the exact
 \section{Results}
 Using the data from the first experiment, we computed all the metrics, namely: Cosine Precision, Clustering Precision, MVEE Precision, Hull Precision, Recall, and the F2 score for each precision metric, as shown in Figure \autoref{fig:all-metrics-1}. When examining the precision metrics, the clustering precision distinctly stands out due to its high value in certain cases, which can be directly attributed to low recall. This recall issue is also evident in some instances for the MVEE and Hull metrics, such as the baseline for \textit{Drones in Agriculture}, where they are set to 0 because fewer than three retrieved core publications are available, which is the minimum number required to define a plane.
 
+\begin{figure}[!b]
+	\hspace*{-1cm}	
+	\includegraphics[scale=0.45]{pics/all-metrics-1.pdf}
+	\caption[Evaluation: Experiment 1]{This figure shows the results of the first experiment across all the datasets. Initially, the issue with the clustering, MVEE, and Hull precision metrics becomes apparent in cases such as \textit{Cloud Migration} and \textit{Multicore Performance Prediction}, where the value is 0. This occurs due to a recall that is <3 for MVEE and Hull and recall of 0 for the clustering. On the other-hand the impact of the crafted F2 score is particularly evident in cases like \textit{Robotic Arthroplasty}, where the baseline score is very high. Conversely, for the predicted query, which retrieves more publications but maintains the same recall, the score is significantly lower.}\label{fig:all-metrics-1}
+\end{figure}
+
 A strong correlation is observed between cosine precision and the MVEE and Hull methods, despite relying solely on UMAP embeddings to define the enclosing shapes. This highlights the robustness of these approaches in identifying semantically relevant publications. Additionally, we have two special case topics that had 0 recall, namely \textit{Cloud Migration} and \textit{Multicore Performance Prediction}. As expected, these resulted in a 0 across the board except for the cosine similarity, since it does not require any of the retrieved core publications to exist in order to compute. Instead, it only relies on the pre-computed average embeddings of the core publications. Interestingly, the results for \textit{Cloud Migration} were not considered relevant at all, which we further experimented with and found that the first relevant publication is identified at a threshold of 0.66.
 
 

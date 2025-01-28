@@ -195,9 +195,7 @@ At first, we test the Semantic Cosine Precision using the high-dimensional origi
 
 Since we aim to use the $F_2$ score as our primary evaluation metric, we also factored it in the cost function which we want to maximize. The objective is to determine the optimal empirical threshold that balances retrieving core publications while controlling the number of false positives. The analysis presented in \autoref{fig:threshold-analysis} indicates that the optimal threshold is approximately 0.69. This means that publications scoring above this threshold are accepted. Interestingly, the results suggest that sacrificing a small number of core publications can be beneficial, as it helps reduce the overall number of semantically relevant but non-core publications, ultimately improving the precision of the retrieved set.
 
-
-
-\begin{figure}[!ht]
+\begin{figure}[!b]
 	\hspace*{-.5cm}
 	\includegraphics[scale=0.58]{pics/threshold-analysis.pdf}
 	\caption[Semantic Cosine Threshold: Empirical Analysis]{This figure illustrates the effect of the threshold on the $F_2$ score. As the threshold increases, the number of semantically relevant publications and core publications identified decreases. However, in some cases, such as \textit{Perovskite Solar Cells Stability}, the $F_2$ score continues to improve despite the loss of a core publication. This outcome is due to the $F_2$ score weighting recall twice as much as precision, allowing for stricter relevance criteria while sacrificing a single core publication.}\label{fig:threshold-analysis}
@@ -231,7 +229,7 @@ For further evaluation, understanding the quality of the UMAP embeddings ($\euma
 
 To cluster the embeddings, we apply \autoref{algo:sp-clustering} using K-means with \( N = 100 \) clusters and a threshold of \( \theta = 0.7 \). The algorithm aims to identify the smallest cluster that contains at least $\theta$ of the core publications. For this process, we use the high-dimensional embeddings, $\eo$, as input. Cosine similarity is used as the distance measure between points which requires input normalization, which is already handled by the output of OpenAI's text-embedding-3-small model.
 
-\begin{figure}[!hb]
+\begin{figure}[!b]
 	\hspace*{-1cm}	
 	\includegraphics[scale=0.45]{pics/sr-clustering-baseline.pdf}
 	\caption[Semantic Clustering: Soft Robotics]{This illustration shows the grouping of the embeddings $\eo$ in higher-dimensional space using K-means, where $K=5$ is identified as the optimal number of clusters (C) that contains $\text{C}_{\text{best}}$, which has at least 70\% of the core publications. The spread-out nature of the clusters is uncommon in K-means but occurs here because clustering is performed in the higher-dimensional space before reducing the data to 2D using UMAP for visualization.}\label{fig:sr-clustering-baseline}
