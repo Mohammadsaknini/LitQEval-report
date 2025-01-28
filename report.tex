@@ -56,14 +56,6 @@ This project report is part of the Search Query Writer (SQW) initiative by Fraun
 \appendix
 
 \chapter{Appendix}
-\begin{figure}[!h]
-	\vspace*{5cm}
-	\centering
-	\includegraphics[scale=0.35]{pics/sqw-stage1.png}
-	\caption[SQW Knowledge Enrichment]{A screenshot of the SQW UI after completing the Knowledge Enrichment stage. On the left, a list of keywords is displayed alongside the number of publications associated with each keyword when used as a search term. The keywords on the right-hand side were manually categorized as general and can be roughly assessed by the number of associated publications. To narrow the scope of general keywords, we selected "agriculture" as the overarching topic. The final generated query is displayed and updated interactively as values in the transfer lists are adjusted.}
-
-	\label{fig:sqw-stage1}
-\end{figure}
 
 \begin{figure}
 	\centering	
@@ -77,19 +69,6 @@ This project report is part of the Search Query Writer (SQW) initiative by Fraun
 	\includegraphics{pics/year-distribution.pdf}
 	\caption[Distribution of publication years per topic]{The distribution of publication years for core publications across various research topics, highlighting the historical range of studies considered in the bibliometric analyses for each field. Notably, for \textit{Cervical Myelopathy}, the lower bound of publication years was set to 1980 for improved readability, although the actual range goes back to 1953.}
 	\label{fig:dataset-years}
-\end{figure}
-
-
-\begin{figure}[!h]
-	\centering	
-	\includegraphics[scale=0.7]{pics/sr-cosine-baseline.pdf}
-	\caption[Semantic Cosine Similarity: Soft Robotics]{This figure illustrates the publications identified as relevant using the cosine similarity measure with the threshold $\theta$ defined by \autoref{eq:sp-cosine}, which in this case was approximately 0.547. The query results included all core publications, as expected, but also classified 75\% of the total retrieved publications as relevant.}\label{fig:sr-cosine-baseline}
-\end{figure}
-
-\begin{figure}
-	\centering	
-	\includegraphics[scale=0.7]{pics/sr-hull-baseline.pdf}
-	\caption[Semantic Cosine Threshold: Empirical Analysis]{This figure shows the relevant publications identified by the Convex Hull}\label{fig:sr-hull-baseline}
 \end{figure}
 
 \begin{figure}
