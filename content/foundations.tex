@@ -24,7 +24,7 @@ The objective of the \textbf{Knowledge Enrichment} step is to provide the LLM wi
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=.48]{pics/sqw-overview.pdf}
+	\includegraphics[height=220px, width=400px]{pics/sqw-overview.pdf}
 	\caption[Search Query Writer]{A simplified overview of the SQW. The process begins with the Knowledge Enrichment stage, where the model receives input data and sends it to an LLM agent equipped with a suite of tools to gain insights into the topic. Based on this understanding, the model generates a well-structured search query, formatted and executed across multiple dimensions to retrieve a relevant selection of literature. Within this literature set, RAG is applied to identify the most pertinent keywords, which are compiled into an optimized search query. This query can be iteratively refined to enhance overall search quality.}
 	\label{fig:sqw-overview}
 \end{figure}
@@ -35,7 +35,7 @@ The output of this first stage is a list of keywords, typically presented in a t
 
 \begin{figure}
 	\centering
-	\includegraphics[height=200px, width=400px]{pics/sqw-stage1.png}
+	\includegraphics[height=180px, width=400px]{pics/sqw-stage1.png}
 	\caption[SQW Knowledge Enrichment]{A screenshot of the SQW UI after completing the Knowledge Enrichment stage. On the left, a list of keywords is displayed alongside the number of publications associated with each keyword when used as a search term. The keywords on the right-hand side were manually categorized as general and can be roughly assessed by the number of associated publications. To narrow the scope of general keywords, we selected "agriculture" as the overarching topic. The final generated query is displayed and updated interactively as values in the transfer lists are adjusted.}
 	\label{fig:sqw-stage1}
 \end{figure}

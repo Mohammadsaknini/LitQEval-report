@@ -50,14 +50,11 @@ This project report is part of the Search Query Writer (SQW) initiative by Fraun
 \input{content/approach.tex}
 \input{content/evaluation.tex}
 \input{content/conclusion.tex}
-
-
-
 \appendix
 
 \chapter{Appendix}
 
-\begin{figure}
+\begin{figure}[!h]
 	\centering	
 	\includegraphics{pics/citation-distribution.pdf}
 	\caption[Field Citation Ratio per Topic]{The citation ratio per topic, showing the relative citation counts of core publications compared to the average citation frequency within their respective research fields. This illustrates how the prominence of each publication compares to typical citation levels in its field.}
@@ -74,10 +71,28 @@ This project report is part of the Search Query Writer (SQW) initiative by Fraun
 \begin{figure}
 	\centering	
 	\includegraphics[scale=0.7]{pics/all-metrics-2.pdf}
-	\caption[Evaluation: Experiment 2]{This figure shows the results of the second experiment across all the SLR datasets. Surprisingly, we can see that using the SLR query does not achieve outstanding results, which is attributed to its reconstruction and adaptation to fit dimension's search engine. Notably, issues similar to those from the first experiment due to the recall of 0 are also apparent in this case.}\label{fig:all-metrics-2}
+	\caption[Evaluation: Experiment 2]{This figure shows the results of the second experiment across all the SLR datasets. Surprisingly, we can see that using the SLR query does not achieve outstanding results, which is attributed to its reconstruction and adaptation to fit dimension's search engine. Notably, issues similar to those from the first experiment due to the recall of 0 are also apparent in this case. Notably, the SLR query used for \textit{Multicore Performance Prediction} is only partially available for public access \autocite{Frank2017}, hence the very low scores.}\label{fig:all-metrics-2}
 \end{figure}
 
-%\section{Further Details on Something}
+\begin{figure}
+	\hspace*{-4cm}	
+	\includegraphics[scale=0.6]{pics/baseline_results.pdf}
+	\caption{The evaluation results of the baseline queries. The color in the figure represents the value of the metric in their respective columns, where the text on F2 metrics indicates the total number of relevant publications used to compute the decay factor. The query for \textit{Robotic Arthroplasty} demonstrates strong performance across precision and recall, and containing only 1.9k relevant publications, thus the high F2 score. In contrast, while \textit{Perovskite Solar Cells Stability} achieves high recall and precision, its F2 score is only decent due to the large number of publications. For the rest of the topics, the F2 score is below average mostly due to the low recall.}\label{fig:baseline-results}
+	\label{fig:baseline-results}
+\end{figure}
+
+\begin{figure}
+	\hspace*{-4cm}	
+	\includegraphics[scale=0.6]{pics/predicted_results.pdf}
+	\caption{The evaluation results of the SLR queries. The color in the figure represents the value of the metric in their respective columns, where the text on F2 metrics indicates the total number of relevant publications used to compute the decay factor. The query for \textit{Robotic Arthroplasty} demonstrates strong performance across precision and recall, and containing only 1.9k relevant publications, thus the high F2 score. In contrast, while \textit{Perovskite Solar Cells Stability} achieves high recall and precision, its F2 score is only decent due to the large number of publications. For the rest of the topics, the F2 score is below average mostly due to the low recall.}\label{fig:predicted-results}
+\end{figure}
+
+\begin{figure}
+	\hspace*{-3cm}	
+	\includegraphics[scale=0.6]{pics/slr_results.pdf}
+	\caption{The evaluation results of the SLR queries. The color in the figure represents the value of the metric in their respective columns, where the text on F2 metrics indicates the total number of relevant publications used to compute the decay factor. Overall, the sample size of the handcrafted SLR queries is smaller compared to the baseline and predicted queries. This reduced count facilitates manual screening of results; however, it appears that precision is generally average to low across these queries. Notably, the SLR query used for \textit{Multicore Performance Prediction} is only partially available for public access \autocite{Frank2017}, hence the very low scores.} \label{fig:slr-results}
+
+\end{figure}
 
 \printbibliography
 
