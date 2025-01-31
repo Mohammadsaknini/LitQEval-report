@@ -1,18 +1,22 @@
 {\let\clearpage\relax \chapter{Conclusion}\label{ch:conclusion}}
 
 \section{Summary and Contributions}
-This work presents \textbf{LitQEval}, a novel framework addressing limitations in evaluating literature search query generation. Existing datasets like CLEF and Collection of Seeds focus on medical data, and while more diverse datasets like Badami’s \autocite{badami2023adaptive} exist, they lack robust evaluation metrics. The primary issues identified are the overemphasis on recall at the expense of precision and the problem of overly broad queries generating excessive irrelevant results. 
+This work presents \textbf{LitQEval}, a novel framework addressing limitations in evaluating literature search query generation. Existing datasets like CLEF and Collection of Seeds often focus on medical data, and while more diverse datasets like Badami’s \autocite{badami2023adaptive} exist, they lack robust evaluation metrics. The primary issues identified are the overemphasis on recall at the expense of precision and the problem of overly broad queries generating excessive irrelevant results. 
 
 LitQEval introduces a more comprehensive dataset covering 21 diverse topics. Core publications were collected using bibliometric analyses and SLRs to ensure relevance. The dataset is validated using techniques like clustering embeddings of publication titles and abstracts, confirming semantic similarity within fields while distinguishing between different topics.
 
 New evaluation metrics are proposed to balance recall and precision. \textit{Semantic Precision} evaluates the relevance of retrieved publications compared to core publications through four approaches: (1) cosine similarity, (2) Minimum Volume Enclosing Ellipsoid, (3) Convex Hull and (4) clustering. These metrics aim to determine relevant publications form an excessively broad queries via semantic similarity. A decay factor further adjusts precision to account for query breadth.
 
-To balance recall and precision, the \textit{ F-$\beta$ }score emphasizes recall $\beta=2$ for evaluating queries. Comparative analyses, including a case study on "Soft Robotics," validate the metrics, revealing insights into the trade-offs between core publication retrieval and query specificity.
+To balance recall and precision, the \textit{ F-$2$ } score emphasizes recall for evaluating queries. Comparative analyses, including a case study on "Soft Robotics," validate the metrics, revealing insights into the trade-offs between core publication retrieval and query specificity.
+
+Overall, we recommend the \textbf{Cosine Precision} as a default metric, as it does not require any CPs to be retrieved by the query for evaluation and becomes more robust as the number of retrieved CPs increases. However, in cases where the number of CPs retrieved falls between 3 and 10, Hull Precision could also be useful, as the number of potential relevant publications remains small enough to avoid negatively affecting the F2 score.
+
+The dataset and code used in this work are publicly available in the LitQEval repository\footnote{\url{https://github.com/Mohammadsaknini/LitQEval}} on GitHub.
 
 \section{Outlook}
 This effort forms part of a broader initiative, the SQW, developed by Fraunhofer INT. The SQW aims to automate or semi-automate the creation of literature queries, expediting research on emerging topics and offering researchers a quick starting point. While this study concentrated on building a pipeline for evaluating search queries rather than testing SQW's performance, numerous opportunities remain to enhance the tool. These include using the second step, \textit{Iterative Scientific Fine-Tuning}, to refine results further. Additionally, testing optional inputs such as detailed descriptions, uploads of relevant publications, or adjusting model parameters (e.g., temperature for exploration) holds significant potential for improvement.
 
-Beyond the SQW, the framework for evaluating query quality introduces new opportunities. For instance, it facilitates the creation of scientific chatbots capable of answering complex questions by combining standard queries, research questions, or relevant publications as inputs. Such tools could leverage cosine similarity within a large semantic space to identify and retrieve additional relevant publications effectively.
+Beyond the SQW, the framework for evaluating query quality introduces new opportunities. For instance, it facilitates the creation of scientific chatbots capable of answering complex questions by combining standard queries, research questions, or relevant publications as inputs. Such tools could use cosine similarity within a large semantic space to identify and retrieve additional relevant publications effectively.
 
 This study highlights several promising directions for future research and development. One key avenue is the refinement and broader application of the semantic precision metrics introduced here. For instance, future work could explore how to adapt these metrics to dynamic and interdisciplinary research areas where core publications may be less clearly defined. 
 
