@@ -1,7 +1,7 @@
 \documentclass[%
   a4paper,fontsize=11pt,abstract=on,%
   oneside,BCOR=19mm,% for print version adapt...
-  %final % activate for final submission, removes draft status and date
+  final % activate for final submission, removes draft status and date
 ]{scrreprt}
 \defaulthyphenchar=127  % make all hyphens additional
 
@@ -28,7 +28,7 @@
 
 
 \begin{abstract}
-This project report is part of the Search Query Writer (SQW) initiative by Fraunhofer INT, designed to assist researchers in generating comprehensive literature search queries, particularly in unfamiliar topic areas. A critical limitation in current literature search workflows is the absence of an objective evaluation framework for query performance, which has so far relied on subjective assessments. This study addresses this gap by introducing a curated dataset containing core publications, which are relevant publications identified through systematic literature reviews (SLRs) or bibliometric analysis works, across multiple research fields, alongside novel metrics to evaluate the query results. Recall and precision are traditionally used for literature search query evaluation, with recall being the primary metric to ensure the retrieval of relevant publications. However, literature searches often yield excessively large result sets, complicating the identification of core publications. To address this, we introduce \textit{semantic precision}, a metric that uses embedding space to identify possible true positives based on their semantic similarity to core publications. Our evaluation reveals that while SQW-generated queries outperform the baseline in recall, they often suffer in precision, particularly when query expansion introduces irrelevant keywords. Primarily, the main goal of this framework is to provide a systematic and automated approach to assess literature search queries. It lays the groundwork for improving tools like SQW, enabling more effective literature query generation across diverse research domains.
+This project report is part of the Search Query Writer (SQW) initiative by Fraunhofer INT, designed to assist researchers in generating comprehensive literature search queries, particularly in unfamiliar topic areas. A critical limitation in current literature search workflows is the absence of an objective evaluation framework for query performance, which has so far relied on subjective assessments. This study addresses this gap by introducing a curated dataset containing core publications (CPs), which are relevant publications identified through systematic literature reviews (SLRs) or bibliometric analysis works, across multiple research fields, alongside novel metrics to evaluate the query results. Recall and precision are traditionally used for literature search query evaluation, with recall being the primary metric to ensure the retrieval of relevant publications. However, literature searches often yield excessively large result sets, complicating the identification of core publications. To address this, we introduce \textit{semantic precision}, a metric that uses embedding space to identify possible false negatives based on their semantic similarity to core publications. Our evaluation reveals that while SQW-generated queries outperform the baseline in recall, they often suffer in precision, particularly when query expansion introduces irrelevant keywords. Primarily, the main goal of this framework is to provide a systematic and automated approach to assess literature search queries. It lays the groundwork for improving tools like SQW, enabling more effective literature query generation across diverse research domains.
 
 \end{abstract}
 
@@ -55,21 +55,6 @@ This project report is part of the Search Query Writer (SQW) initiative by Fraun
 \chapter{Appendix}
 
 \begin{figure}[!h]
-	\centering	
-	\includegraphics[scale=0.45]{pics/citation-distribution.pdf}
-	\caption[CPs Citation Count in Their Respective Fields]{This figure presents the citation counts of CPs within their respective fields. Overall, CPs in certain fields, such as \textit{Nanopharmaceuticals}, tend to have higher citation counts on average compared to others. Additionally, CPs identified through Bibliometric Analysis are often highly cited, whereas those from Systematic Literature Reviews tend to have lower citation counts. This observation suggests that the definition of a CP may vary depending on the initial research intent.}
-
-	\label{fig:dataset-citation}
-\end{figure}
-
-\begin{figure}
-	\centering	
-	\includegraphics[scale=0.45]{pics/year-distribution.pdf}
-	\caption[Distribution of publication years per topic]{This figure shows the publishing date distribution of the core publications across their research fields, highlighting the range of studies considered in the BAs and SLRs for each field. Notably, for \textit{Cervical Myelopathy}, the lower bound of publication years was set to 1980 for improved readability, although the actual range goes back to 1953.}
-	\label{fig:dataset-years}
-\end{figure}
-
-\begin{figure}
 	\hspace*{-4cm}	
 	\includegraphics[scale=0.6]{pics/baseline_results.pdf}
 	\caption[Predicted Queries Results]{The evaluation results of the baseline queries. The color in the figure represents the value of the metric in their respective columns, where the text on F2 metrics indicates the total number of relevant publications used to compute the decay factor. The query for \textit{Robotic Arthroplasty} demonstrates strong performance across precision and recall, and containing only 1.9k relevant publications, thus the high F2 score. In contrast, while \textit{Perovskite Solar Cells Stability} achieves high recall and precision, its F2 score is only decent due to the large number of publications. For the rest of the topics, the F2 score is below average mostly due to the low recall.}\label{fig:baseline-results}
